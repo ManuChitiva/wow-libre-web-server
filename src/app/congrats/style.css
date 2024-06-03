@@ -1,0 +1,121 @@
+.congrats {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #0b1218;
+  text-align: center;
+  padding: 20px; /* Añade un poco de padding para pantallas pequeñas */
+  overflow: hidden; /* Asegura que los copos de nieve no causen desplazamiento */
+}
+
+.congrats-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(94, 172, 232, 0.746);
+  width: 100%;
+  max-width: 100%; /* Ajusta el tamaño máximo del contenedor */
+  text-align: center;
+  margin: 20px; /* Añade margen para evitar que se pegue a los bordes */
+}
+
+.congrats-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.congrats-img {
+  width: 80px; /* Tamaño ajustado de la imagen */
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.congrats-img-large {
+  width: 100%; /* Ajusta el ancho de la imagen */
+  height: auto; /* Mantiene la proporción de aspecto */
+  margin-bottom: 0; /* Elimina el margen inferior */
+  margin-right: 0; /* Elimina el margen derecho */
+}
+
+.title {
+  color: white;
+  margin-bottom: 24px;
+  font-size: 2rem; /* Tamaño ajustado del texto */
+  font-weight: bold;
+}
+
+.account-info {
+  color: white;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+.account-username,
+.account-email {
+  color: #abbbcd;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.download-button {
+  width: 100%;
+  max-width: 500px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.download-button {
+  background-color: #275082bc;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.download-button:hover {
+  background-color: #3b82f6;
+}
+
+/* Media query para ocultar la imagen y la nieve en dispositivos móviles */
+@media (max-width: 768px) {
+  .congrats-img-large {
+    display: none;
+  }
+
+  .snowflake {
+    display: none;
+  }
+
+  .congrats-container {
+    flex-direction: column; /* Ajusta el layout para pantallas pequeñas */
+    padding: 20px; /* Ajusta el padding */
+  }
+
+  .congrats-content {
+    margin-bottom: 0; /* Ajusta el margen para pantallas pequeñas */
+  }
+
+  .title {
+    font-size: 1.5rem; /* Ajusta el tamaño del texto */
+  }
+
+  .account-info {
+    font-size: 0.875rem; /* Ajusta el tamaño del texto */
+  }
+
+  .download-button {
+    font-size: 0.875rem; /* Ajusta el tamaño del texto */
+  }
+}

@@ -1,0 +1,26 @@
+*:focus {
+  outline: none;
+}
+
+.search-primary {
+  display: flex;
+  border-radius: 10px 0 0 10px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 1rem;
+  background-color: #fcfcfc;
+  border-radius: 10px 0 0 10px;
+}
+.search-input::placeholder {
+  color: rgb(0, 0, 0);
+  font-size: 1.6rem;
+}
+.button {
+  margin: 0;
+  background-color: #e7ae04;
+  color: #ffffff;
+  padding: 1.55rem;
+  border-radius: 0 10px 10px 0px;
+}

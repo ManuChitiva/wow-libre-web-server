@@ -1,0 +1,26 @@
+.friend-detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  height: 60rem;
+  width: 60rem;
+}
+
+.friend-detail-component {
+  width: 30rem;
+  max-width: 30rem;
+}
+.friend-detail-picture {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.friend-detail-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 3rem;
+  max-width: 30rem;
+  align-items: start;
+}

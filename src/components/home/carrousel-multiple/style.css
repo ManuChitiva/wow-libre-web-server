@@ -1,0 +1,65 @@
+.carrousel-offert {
+  border-radius: 2%;
+}
+
+.carrousel-offert-title {
+  text-align: start;
+  padding-left: 1rem;
+  font-size: 2rem;
+  color: rgb(178, 178, 177);
+}
+
+.carrousel-offert-content {
+  max-height: 50rem;
+  max-width: 80rem;
+}
+
+.carrousel-offert-content-product {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  max-width: auto;
+  padding-left: 2rem;
+}
+
+.carrousel-offert-content-product img {
+  width: 100%;
+  height: 20rem; /* Por ejemplo, establecer un tamaño fijo */
+  object-fit: cover; /* Para mantener la proporción y recortar la imagen si es necesario */
+}
+
+.carrousel-offert-content-product-detail-title {
+  color: #f6a001;
+  margin-top: 0.5rem;
+}
+.carrousel-offert-content-product-detail-description {
+  color: rgb(178, 178, 177);
+}
+.carrousel-offert-content-product-detail-price {
+  color: rgb(57, 101, 182);
+}
+.carrousel-offert-content-product-detail-disclaimer {
+  color: #2af10b;
+}
+
+.carrousel-offert-content-product-detail-button {
+  display: block; /* Para que el botón ocupe todo el ancho disponible */
+  margin: 0 auto; /* Centra horizontalmente el botón */
+  background-color: #202b4d;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 2rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.carrousel-offert-content-product-detail-button:hover {
+  background-color: #304994;
+  color: #fff;
+}

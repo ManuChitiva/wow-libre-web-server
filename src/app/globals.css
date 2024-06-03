@@ -1,33 +1,43 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@font-face {
+  font-family: "Folkard";
+  src: url("/font/Folkard-Regular.ttf") format("truetype");
 }
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  font-family: "Lora", serif;
+  font-size: 1.6rem;
+  line-height: 2;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.contenedor {
+  max-width: 120rem;
+  margin-inline: auto;
+}
+
+.title-server {
+  font-family: "Folkard", sans-serif;
+}
+
+.box-shadow-server {
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(94, 172, 232, 0.746);
 }

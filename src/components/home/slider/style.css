@@ -1,0 +1,100 @@
+.slider-introduction {
+  margin-top: 5rem;
+}
+.slider-introduction-title {
+  font-size: 2.5rem;
+  color: #f6a001;
+}
+.slider-introduction-description {
+  color: #fff;
+  font-size: 1.8rem;
+
+  margin: 2rem 0 0 0;
+}
+.slider-introduction-other {
+  color: #f6a001;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+.slider {
+  margin-bottom: 4rem;
+}
+
+.cards-slider {
+  border: 0.2rem solid rgba(94, 172, 232, 0.903);
+
+  display: flex; /* Utiliza flexbox para distribuir los elementos internos */
+  flex-direction: column; /* Coloca los elementos internos en una columna */
+  margin: 1rem 1rem 0 0;
+  border-radius: 3%;
+  max-width: 40rem;
+  background-image: linear-gradient(to bottom, #0c243b, #161d2a);
+  position: relative; /* Añade posicionamiento relativo */
+  height: 400px; /* Establece una altura fija para todas las tarjetas */
+  overflow: hidden; /* Oculta el contenido que se desborde */
+}
+.slider-text {
+  overflow-y: auto; /* Permite que el contenido se desplace verticalmente si es necesario */
+  padding: 0 1rem; /* Agrega un poco de relleno horizontal para separar el texto de los bordes de la tarjeta */
+}
+.slider-content {
+  padding-top: 1rem;
+}
+.slider-title {
+  color: rgb(247, 247, 247);
+  text-align: center;
+}
+.slider-subtitle {
+  color: #e7ae04;
+  font-style: bold;
+  text-align: center;
+}
+.slider-image {
+  flex-grow: 1; /* Hace que la imagen ocupe todo el espacio restante */
+  display: flex; /* Utiliza flexbox para centrar la imagen */
+  justify-content: center; /* Centra horizontalmente la imagen */
+  align-items: center; /* Centra verticalmente la imagen */
+  margin: 1rem 1rem 0 0;
+  overflow: hidden; /* Evita que la imagen se desborde de su contenedor */
+  max-width: auto;
+}
+
+.slider-image img {
+  max-width: 100%; /* Establece el ancho máximo de la imagen al 100% del contenedor */
+  max-height: 80%; /* Establece la altura máxima de la imagen al 70% del contenedor */
+  object-fit: contain; /* Escala la imagen para que quepa dentro del contenedor */
+  object-position: center; /* Centra la imagen dentro del contenedor */
+  border-radius: 100%;
+}
+
+.slider-description {
+  text-align: start; /* Centra la descripción */
+  margin-top: 0.5rem; /* Añade un pequeño espacio superior */
+  padding: 0 0.2rem 0 0.2rem;
+  overflow-y: auto; /* Permite que el contenido se desplace verticalmente si es necesario */
+  padding: 0 1rem; /* Agrega un poco de relleno horizontal para separar el texto de los bordes de la tarjeta */
+
+  color: #fff;
+}
+.slider-rating {
+  overflow-y: auto; /* Permite que el contenido se desplace verticalmente si es necesario */
+  padding: 0 1rem; /* Agrega un poco de relleno horizontal para separar el texto de los bordes de la tarjeta */
+}
+.slider-contract {
+  text-align: center;
+}
+.contract-button {
+  padding: 3px 45px; /* Espaciado interno */
+  font-size: 16px; /* Tamaño de la fuente */
+  font-weight: bold; /* Negrita */
+  color: #000000; /* Color del texto */
+  background-color: #5472cd;
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Borde redondeado */
+  cursor: pointer; /* Cursor de tipo puntero */
+  transition: background-color 0.3s ease; /* Transición suave del color de fondo */
+}
+
+.contract-button:hover {
+  background-color: #92a7e7;
+}

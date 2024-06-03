@@ -1,0 +1,56 @@
+.nav-minimalist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 2rem 2rem;
+  box-sizing: border-box; /* Ensure padding is included in the width */
+}
+
+.nav-minimalist-logo {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.nav-minimalist-img {
+  max-width: 5%;
+}
+
+.nav-minimalist-help {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.nav-minimalist-help-img {
+  max-width: 60%;
+}
+
+.nav-minimalist-logo-title {
+  padding-top: 2rem;
+  padding-left: 1rem;
+  color: #fff;
+  font-size: 3rem;
+}
+
+/* Media queries for mobile devices */
+@media (max-width: 768px) {
+  .nav-minimalist-header {
+    padding: 1rem;
+  }
+
+  .nav-minimalist-img {
+    max-width: 9%; /* Increase the max-width for mobile devices */
+  }
+
+  .nav-minimalist-help-img {
+    max-width: 100%; /* Increase the max-width for mobile devices */
+  }
+
+  .nav-minimalist-logo-title {
+    font-size: 2rem; /* Reduce font size for mobile devices */
+    padding-top: 1rem; /* Adjust padding for mobile devices */
+    padding-left: 0.5rem; /* Adjust padding for mobile devices */
+  }
+}

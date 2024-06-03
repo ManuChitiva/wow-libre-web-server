@@ -1,0 +1,94 @@
+/** Navbar Logo And Title **/
+
+.navbar {
+  margin-top: 0.1rem;
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr;
+}
+
+.logo-home {
+  padding-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nav-small-image {
+  max-width: 30%;
+}
+
+.title-home {
+  color: #fff;
+  font-size: 1.6rem;
+}
+/** Searcher **/
+.searcher {
+  width: 70rem;
+  align-self: center;
+}
+
+/** Nav Promotion **/
+.promotion {
+  align-self: center;
+}
+
+.image-promotion {
+  max-width: 100%;
+}
+/** Nav Category **/
+
+.category {
+  display: flex;
+  gap: 5rem;
+  color: #fff;
+  justify-content: center;
+}
+
+.category-link:hover {
+  color: #e8c500;
+}
+/**  Ubication **/
+
+.nav-ubication {
+  display: flex;
+  padding: 0.4rem;
+  justify-content: center;
+}
+
+.nav-ubication a {
+  font-size: 13px;
+  color: white;
+  text-decoration: none;
+}
+
+/**  Auth **/
+.auth {
+  width: 32rem;
+  padding-left: 0.1rem;
+  align-self: flex-start;
+  justify-content: center;
+}
+
+.nav-auth {
+  display: flex;
+  padding-left: 1rem;
+  gap: 2.3rem;
+}
+
+.nav-auth-category {
+  display: inline-block;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.nav-auth-category:hover {
+  color: #e6d324;
+}
+
+.positionAbsolut {
+  position: absolute;
+  z-index: 1000;
+}
+.hoover-text-yellow:hover {
+  color: #e6d324;
+}

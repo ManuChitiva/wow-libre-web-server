@@ -1,0 +1,19 @@
+.bg-paper-image {
+  background-image: url("/img/homes/us/us.jpg");
+  border-radius: 20px; /* Ajusta el redondeo según prefieras */
+  transition: transform 0.3s ease-in-out; /* Agrega una transición suave */
+}
+
+.bg-paper-image:hover {
+  transform: scale(
+    1.2
+  ); /* Escala ligeramente la imagen al pasar el cursor sobre ella */
+}
+
+.buttom {
+  background-color: #19368e;
+}
+.buttom:hover {
+  background-color: #304994;
+  color: #fff;
+}

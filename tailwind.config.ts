@@ -8,6 +8,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+    colors: {
+      // Agrega tu color personalizado aquí
+      midnight: '#0B1218', 
+      btnPrimary: '#FF4E16'
+    },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
