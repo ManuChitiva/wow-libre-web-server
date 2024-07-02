@@ -6,10 +6,10 @@ import DropDown from "../dropdown";
 import LoadingSpinner from "@/components/loading-spinner";
 
 const NavbarAuth = () => {
-  const { user, setUser } = useUserContext();
-  const [isLoading, setIsLoading] = useState(true);
+  const { user, clearUserData } = useUserContext();
   const [showDropdown, setShowDropdown] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
@@ -49,7 +49,7 @@ const NavbarAuth = () => {
           <button className="nav-auth-category" onClick={toggleDropdown}>
             <div className="w-10 h-10 rounded-full overflow-hidden ">
               <img
-                src={"/img/avatar_default.png"}
+                src={user.avatar}
                 alt="Perfil"
                 className="w-full h-full object-cover"
               />
@@ -60,7 +60,7 @@ const NavbarAuth = () => {
 
       {showDropdown && (
         <div className="absolute top-full mt-2 right-0">
-          <DropDown />
+          <DropDown user={user} clearUserData={clearUserData} />
         </div>
       )}
     </nav>

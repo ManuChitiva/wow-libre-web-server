@@ -9,6 +9,7 @@ import {
   faEnvelope,
   faShieldHeart,
   faCrown,
+  faFlag,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { useUserContext } from "@/context/UserContext";
@@ -25,9 +26,11 @@ import { AccountDetailDto, Character, Characters } from "@/model/model";
 import Cookies from "js-cookie";
 import CharacterSelection from "@/components/character_selection";
 import Friend from "@/components/friends/friend";
-import NavbarMinimalist from "@/components/register/navbar";
 import { getAccount } from "@/api/account";
 import AccountForm from "@/components/account";
+import NavbarAuthenticated from "@/components/navbar-authenticated";
+import DetailAccount from "@/components/account";
+import Mails from "@/components/account/mails";
 
 const AccountDetail = () => {
   const searchParams = useSearchParams();
@@ -49,7 +52,10 @@ const AccountDetail = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response: Characters = await getCharacters(token || "");
+        const response: Characters = await getCharacters(
+          token || "",
+          accountId || ""
+        );
         setCharacters(response.characters);
       } catch (error) {
         console.error("Ha ocurrido un error al obtener los personajes", error);
@@ -105,8 +111,8 @@ const AccountDetail = () => {
 
   return (
     <div className="contenedor mx-auto ">
-      <NavbarMinimalist />
-
+      ​
+      <NavbarAuthenticated />
       {/* Sección de perfil */}
       <div className="flex flex-col items-center justify-center py-20 ">
         <img
@@ -116,7 +122,7 @@ const AccountDetail = () => {
         />
         <div className="text-center ">
           <h1 className="text-white text-4xl font-semibold">
-            {userDetail?.account_web.first_name}{" "}
+            {userDetail?.account_web.first_name}
             {userDetail?.account_web.last_name}
           </h1>
           <p className="text-white  pb-2 text-2xl ">
@@ -140,7 +146,6 @@ const AccountDetail = () => {
           </div>
         </div>
       </div>
-
       {/* Secciones con pestañas */}
       <div className="mt-10  bg-profile eyelashes box-shadow-primary  overflow-hidden">
         <Tabs>
@@ -151,28 +156,32 @@ const AccountDetail = () => {
                 <FontAwesomeIcon icon={faComment} className="mr-2 text-2xl" />
                 Amigos
               </Tab>
-              <Tab className="py-6 px-6 text-white bg-tablist first-letter:text-white   cursor-pointer text-lg font-semibold flex items-center">
-                <FontAwesomeIcon icon={faEnvelope} className="mr-2 text-2xl" />
-                Notificaciones
+              <Tab className="py-6 px-6 text-white bg-tablist  cursor-pointer text-lg font-semibold flex items-center">
+                <FontAwesomeIcon icon={faEnvelope} className="mr-2 text-2xl" />{" "}
+                Mensajes
               </Tab>
               <Tab className="py-6 px-6 text-white bg-tablist  cursor-pointer text-lg font-semibold flex items-center">
-                <FontAwesomeIcon icon={faUser} className="mr-2 text-2xl" />
-                Account
+                <FontAwesomeIcon icon={faUser} className="mr-2 text-2xl" />{" "}
+                Cuenta
               </Tab>
               <Tab className="py-6 px-6 text-white  bg-tablist cursor-pointer text-lg font-semibold flex items-center">
                 <FontAwesomeIcon icon={faClipboard} className="mr-2 text-2xl" />
-                Movimientos
+                Inventario
               </Tab>
-              <Tab className="py-6 px-6 text-white  bg-tablist cursor-pointer text-lg font-semibold flex items-center">
+              <Tab className="py-6 px-5 text-white  bg-tablist cursor-pointer text-lg font-semibold flex items-center">
                 <FontAwesomeIcon
                   icon={faShieldHeart}
                   className="mr-2 text-2xl"
                 />
-                Seguridad
+                Profesiones
               </Tab>
-              <Tab className="py-6 px-6 text-white bg-tablist  cursor-pointer text-lg font-semibold flex items-center">
-                <FontAwesomeIcon icon={faCrown} className="mr-2" />
-                Pass Battle
+              <Tab className="py-6 px-5 text-white  bg-tablist cursor-pointer text-lg font-semibold flex items-center">
+                <FontAwesomeIcon icon={faFlag} className="mr-2 text-2xl" />
+                Hermandad
+              </Tab>
+              <Tab className="py-6 px-5 text-white bg-tablist  cursor-pointer text-lg font-semibold flex items-center">
+                <FontAwesomeIcon icon={faCrown} className="mr-2 text-2xl" />{" "}
+                Premium
               </Tab>
             </TabList>
 
@@ -184,29 +193,36 @@ const AccountDetail = () => {
               <TabPanel>
                 {/* Contenido de la pestaña Amigos */}
                 {selectedCharacter && (
-                  <Friend character={selectedCharacter} token={token || ""} />
+                  <Friend
+                    character={selectedCharacter}
+                    token={token || ""}
+                    account_id={accountId || ""}
+                  />
                 )}
               </TabPanel>
               <TabPanel>
                 {/* Contenido de la pestaña Notificaciones */}
-                <div className="p-4">
-                  Contenido de la pestaña Notificaciones
-                </div>
+                {selectedCharacter && (
+                  <Mails
+                    token={token || ""}
+                    character_id={selectedCharacter.id}
+                  />
+                )}
               </TabPanel>
               <TabPanel>
                 {/* Contenido de la pestaña Perfil Detallado */}
                 {userDetail && token ? (
-                  <AccountForm account={userDetail} tokenJwt={token} />
+                  <DetailAccount account={userDetail} token={token} />
                 ) : null}
               </TabPanel>
               <TabPanel>
-                {/* Contenido de la pestaña Transacciones */}
-                <div className="p-4">Contenido de la pestaña Transacciones</div>
+                {/* Contenido de la pestaña Inventario */}
+                <div className="p-4">Contenido de la pestaña Inventario</div>
               </TabPanel>
-              <TabPanel>{/* Contenido de la pestaña Seguridad Web */}</TabPanel>
-              <TabPanel>
-                {/* Contenido de la pestaña Seguridad Ingame */}
-              </TabPanel>
+              <TabPanel>{/* Contenido de la pestaña Profesiones */}</TabPanel>
+              <TabPanel>{/* Contenido de la pestaña Hermandad */}</TabPanel>
+
+              <TabPanel>{/* Contenido de la pestaña Premim */}</TabPanel>
             </div>
           </div>
         </Tabs>

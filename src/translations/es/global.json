@@ -1,0 +1,32 @@
+{
+    "navbar": {
+        "language": "Seleccione su idioma"
+    },
+    "register": {
+        "error": {
+            "country-empty": "Por favor, selecciona un país válido.",
+            "birth-date-empty": "Por favor, ingresa una fecha de nacimiento válida."
+        },
+        "title-server-sub-title": "Registrarme en",
+        "title-server-message": "¡Toda la información que nos compartas en Wow Libre es como el ingrediente especial de tu experiencia alucinante! Cuanto más sepamos, mejor podremos hacerte vivir algo realmente extraordinario. Así que, ¡compártenos esos datos y prepárate para algo fuera de serie!",
+        "input": {
+            "select-country": "Seleccione un pais",
+            "select-birthday": "Fecha de Nacimiento"
+        }
+    },
+    "login": {
+        "error": {
+            "empty-field-title": "Formulario incompleto",
+            "empty-field-message": "Por favor, complete todos los campos obligatorios para continuar",
+            "empty-field-buttom-message": "Entendido",
+            "authentication-message": "Los datos son invalidos, por favor revisa tu informacion"
+        },
+        "title": "Iniciar sesión",
+        "username": " Ingresa tu username",
+        "password": " Ingresa tu password",
+        "buttom": "Loguearme",
+        "old-password": "¿Olvidaste tu contraseña?",
+        "create-account-message": "Crea tu cuenta",
+        "create-account-question": "¿No tienes una cuenta?"
+    }
+}

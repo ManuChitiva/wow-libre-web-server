@@ -1,7 +1,7 @@
 "use client";
 
 import PageCounter from "@/components/register/counter";
-import NavbarMinimalist from "@/components/register/navbar";
+import NavbarMinimalist from "@/components/navbar-minimalist";
 import TitleWow from "@/components/title";
 import { useUserContext } from "@/context/UserContext";
 import { encryptPassword } from "@/security";
@@ -16,9 +16,9 @@ const crypto = require("crypto");
 import Cookies from "js-cookie";
 
 const AccountIngame = () => {
-  const { user, setUser } = useUserContext(); // Obteniendo el contexto y funciones del contexto
+  const { user } = useUserContext();
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState(""); // Nuevo estado para la confirmación de contraseña
+  const [confirmPassword, setConfirmPassword] = useState("");
   const router = useRouter();
   const { computeVerifier, params } = require(`trinitycore-srp6`);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -93,12 +93,12 @@ const AccountIngame = () => {
         jwt || ""
       );
 
-      router.push("/account");
+      router.push("/accounts");
     } catch (error: any) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: error.message, // Imprimir el mensaje de error
+        text: error.message,
         color: "white",
         background: "#0B1218",
         timer: 4500,

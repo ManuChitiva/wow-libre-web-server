@@ -1,5 +1,9 @@
 import { BASE_URL_AUTH } from "@/configs/configs";
-import { GenericResponseDto } from "@/dto/generic";
+import {
+  GenericResponseDto,
+  GenericResponseImpl,
+  InternalServerError,
+} from "@/dto/generic";
 import { AccountDetailDto, AccountsModel } from "@/model/model";
 import { v4 as uuidv4 } from "uuid";
 
@@ -13,17 +17,17 @@ export const getAccounts = async (jwt: string): Promise<AccountsModel[]> => {
     },
   });
 
-  const responseData = await response.json();
-
   if (response.ok && response.status === 200) {
+    const responseData = await response.json();
     return responseData.data;
-  } else if (response.status == 404 || response.status == 409) {
-    const badRequestError: GenericResponseDto<void> = responseData;
-    throw new Error(`Error: ${badRequestError.message}`);
+  } else if (response.status === 403) {
+    throw new InternalServerError(
+      "Unauthorized access, please renew your token.",
+      response.status
+    );
   } else {
-    const errorMessage = await response.text();
     throw new Error(
-      `An error occurred while trying to register data: ${errorMessage}`
+      `Por favor intente mas tarde, el servicio no se encuentra disponible.`
     );
   }
 };

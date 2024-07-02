@@ -2,7 +2,6 @@
 
 import React, { ChangeEvent, useEffect, useState } from "react";
 import "./style.css";
-import NavbarMinimalist from "@/components/register/navbar";
 import TitleWow from "@/components/title";
 import Select from "react-select";
 import PageCounter from "@/components/register/counter";
@@ -11,39 +10,43 @@ import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { CountryModel } from "@/model/model";
 import { getAvailableCountries } from "@/api/country";
+import { useTranslation } from "react-i18next";
+import NavbarMinimalist from "@/components/navbar-minimalist";
 
 const defaultCountryOptions: CountryModel[] = [
   { value: "Otro", label: "Otro", language: "es" },
 ];
 
 const Register = () => {
+  const { t, i18n } = useTranslation();
   const { user, setUser } = useUserContext();
   const router = useRouter();
   const [country, setCountry] = useState<string>("");
   const [language, setLanguage] = useState<string>("");
-
-  const [fecha, setFecha] = useState<string>("");
-
+  const [date, setDate] = useState<string>("");
   const [countryOptions, setCountryOptions] = useState<CountryModel[]>(
     defaultCountryOptions
   );
 
-  const handleFechaChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setFecha(event.target.value);
+  const handleDateChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setDate(event.target.value);
   };
+
   const handleCountryChange = (selectedOption: CountryModel | null) => {
-    setCountry(selectedOption ? selectedOption.value : "");
-    setLanguage(selectedOption ? selectedOption.language : "es");
+    const language = selectedOption ? selectedOption.language : "es";
+    const countrySelect = selectedOption ? selectedOption.value : "";
+    setCountry(countrySelect);
+    setLanguage(language);
+    i18n.changeLanguage(language);
   };
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     if (!country.trim()) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Por favor, selecciona un país válido.",
+        text: t("register.error.country-empty"),
         color: "white",
         background: "#0B1218",
         timer: 43500,
@@ -51,11 +54,11 @@ const Register = () => {
       return;
     }
 
-    if (!fecha) {
+    if (!date) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Por favor, ingresa una fecha de nacimiento válida.",
+        text: t("register.error.birth-date-empty"),
         color: "white",
         background: "#0B1218",
         timer: 43500,
@@ -68,7 +71,7 @@ const Register = () => {
         ...user,
         language: language,
         country: country,
-        date_of_birth: new Date(fecha),
+        date_of_birth: new Date(date),
       });
     }
     router.push("/register/know-you");
@@ -88,35 +91,31 @@ const Register = () => {
 
   useEffect(() => {
     if (user) {
-      setCountry(user.country || "");
-      setFecha(
+      i18n.changeLanguage(user.language);
+      setCountry(user.country);
+      setDate(
         user.date_of_birth
           ? new Date(user.date_of_birth).toISOString().split("T")[0]
           : ""
       );
     }
-  }, [setUser]);
+  }, []);
 
   return (
     <div className="contenedor register">
       <NavbarMinimalist />
-
       <div className="register-container">
         <TitleWow
-          title=" Registrarme en "
-          description="¡Toda la información que nos compartas en Wow Libre es como el
-            ingrediente especial de tu experiencia alucinante! Cuanto más sepamos,
-            mejor podremos hacerte vivir algo realmente extraordinario. Así que,
-            ¡compártenos esos datos y prepárate para algo fuera de serie!"
+          title={t("register.title-server-sub-title")}
+          description={t("register.title-server-message")}
         />
-
-        <form className="register-container-form " onSubmit={handleFormSubmit}>
+        <form className="register-container-form" onSubmit={handleFormSubmit}>
           <div className="form-group select-container">
             <label
               htmlFor="countrySelect"
               className="mb-2 register-container-form-label"
             >
-              Selecciona el país
+              {t("register.input.select-country")}
             </label>
             <Select
               instanceId={"wsad123wqwe"}
@@ -128,27 +127,25 @@ const Register = () => {
               isSearchable
             />
           </div>
-
           <div className="form-group">
             <label
               htmlFor="fechaInput"
               className="mb-2 register-container-form-label"
             >
-              Fecha de Nacimiento
+              {t("register.input.select-birthday")}
             </label>
             <input
               className="mb-3 px-4 py-2 border rounded-md text-black register-input"
               type="date"
               id="fechaInput"
               name="fechaInput"
-              value={fecha}
-              onChange={handleFechaChange}
+              value={date}
+              onChange={handleDateChange}
             />
           </div>
-
           <PageCounter currentSection={1} totalSections={5} />
           <button
-            className=" text-white px-5 py-5 rounded-md mt-8 button-register"
+            className="text-white px-5 py-5 rounded-md mt-8 button-register"
             type="submit"
           >
             Continuar

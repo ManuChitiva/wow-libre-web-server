@@ -15,7 +15,8 @@ const NavbarMinimalist = () => {
       </Link>
 
       <div>
-        <Link className="nav-minimalist-help" href="/">
+        <Link className="nav-minimalist-help" href="/help">
+          <p className="text-white text-3xl mr-6 pt-4 title-server">Support</p>
           <img
             className="nav-minimalist-help-img"
             src="/img/icons/help.png"

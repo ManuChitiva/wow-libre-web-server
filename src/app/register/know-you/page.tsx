@@ -1,18 +1,20 @@
 "use client";
 import PageCounter from "@/components/register/counter";
-import NavbarMinimalist from "@/components/register/navbar";
+import NavbarMinimalist from "@/components/navbar-minimalist";
 import TitleWow from "@/components/title";
 import { useUserContext } from "@/context/UserContext";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import "../style.css";
+import { useTranslation } from "react-i18next";
 
 const KnowYou = () => {
   const { user, setUser } = useUserContext(); // Obteniendo el contexto y funciones del contexto
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
   const router = useRouter();
+  const { t } = useTranslation();
 
   const handleLastNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setLastName(event.target.value);
@@ -85,7 +87,7 @@ const KnowYou = () => {
 
       <div className="register-container">
         <TitleWow
-          title=" Registrarme en "
+          title={t("register.title-server-sub-title")}
           description="Es posible que se utilice tu nombre real en el 
       futuro para verificar tu identidad cuando te pongas en contacto con WowLibre. 
       Por defecto, tu nombre real permanecerá oculto para otros usuarios."

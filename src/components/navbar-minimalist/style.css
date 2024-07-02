@@ -19,12 +19,14 @@
 
 .nav-minimalist-help {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: end;
+  justify-content: center;
+  text-align: center;
 }
 
 .nav-minimalist-help-img {
-  max-width: 60%;
+  max-width: 35%;
 }
 
 .nav-minimalist-logo-title {
@@ -34,18 +36,18 @@
   font-size: 3rem;
 }
 
-/* Media queries for mobile devices */
 @media (max-width: 768px) {
   .nav-minimalist-header {
     padding: 1rem;
   }
 
   .nav-minimalist-img {
-    max-width: 9%; /* Increase the max-width for mobile devices */
+    max-width: 10%; /* Increase the max-width for mobile devices */
   }
 
   .nav-minimalist-help-img {
-    max-width: 100%; /* Increase the max-width for mobile devices */
+    max-width: 35%; /* Increase the max-width for mobile devices */
+    margin-right: 2rem;
   }
 
   .nav-minimalist-logo-title {

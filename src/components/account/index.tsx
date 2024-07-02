@@ -15,12 +15,11 @@ const crypto = require("crypto");
 
 interface ProfileSecurityProps {
   account: AccountDetailDto;
-  tokenJwt: string;
+  token: string;
 }
 
-const AccountForm = ({ account, tokenJwt }: ProfileSecurityProps) => {
+const DetailAccount = ({ account, token }: ProfileSecurityProps) => {
   const [isEditing, setIsEditing] = useState(false);
-
   const { computeVerifier, params } = require(`trinitycore-srp6`);
   const [passwordWeb, setPasswordWeb] = useState("");
   const [password, setPassword] = useState("");
@@ -92,7 +91,7 @@ const AccountForm = ({ account, tokenJwt }: ProfileSecurityProps) => {
     };
 
     try {
-      await changePasswordGame(userSecurity, tokenJwt);
+      await changePasswordGame(userSecurity, token);
 
       Swal.fire({
         icon: "success",
@@ -120,78 +119,86 @@ const AccountForm = ({ account, tokenJwt }: ProfileSecurityProps) => {
   return (
     <div className="mx-auto mt-8 text-white">
       <div className="text-center mx-auto mt-8 max-w-2xl">
-        <h2 className="mb-5 font-bold text-2xl">
-          Fortalece las defensas de tu reino digital con una contraseña sólida y
-          segura. Sé el protagonista de tu epopeya en World of Warcraft,
-          resguardando tus tesoros virtuales con una llave impenetrable.
-        </h2>
-
-        <hr className="border-t-1 border-gray-300 my-4 mx-8" />
-
         <div className="text-center">
           <h2 className="font-bold text-2xl">Estado actual de la cuenta</h2>
           <h3
             className={`text-xl font-semibold m-2 ${
-              false ? "text-red-500" : "text-green-500"
+              account.account_banned && account.account_banned.active
+                ? "text-red-500"
+                : "text-green-500"
             }`}
           >
-            Su cuenta está: {false ? "Inhabilitada" : "Disponible"}
+            Su cuenta está:{" "}
+            {account.account_banned ? "Inhabilitada" : "Disponible"}
           </h3>
 
-          {true && (
-            <>
-              <div className="grid grid-cols-2 gap-8 text-2xl">
-                <p className="text-gray-400 m-2 font-semibold">
-                  Fecha del bloqueo:
-                  <br />
-                  <span className="text-xs ml-2">{false}</span>
-                </p>
-                <p className="text-gray-400 m-2 font-semibold">
-                  Fecha de desbloqueo:
-                  <br />
-                  <span className="text-xs">{false}</span>
+          {account.account_banned && account.account_banned.active && (
+            <div className="grid grid-cols-2 gap-8 text-2xl">
+              <p className="text-gray-400 m-2 font-semibold">
+                Fecha del bloqueo:
+                <br />
+                <span className="text-lg ml-2">
+                  {account.account_banned.bandate}
+                </span>
+              </p>
+              <p className="text-gray-400 m-2 font-semibold text-md">
+                Fecha de desbloqueo:
+                <br />
+                <span className="ml-2 text-lg">
+                  {account.account_banned.unbandate}
+                </span>
+              </p>
+              <div className="col-span-2">
+                <p className="text-gray-400 m-2 font-semibold text-2xl">
+                  Ha sido baneado por el GM : <br />
+                  <span className="text-red-500 ml-2 text-2xl ">
+                    {account.account_banned.banned_by}
+                  </span>
                 </p>
               </div>
-              <p className="text-gray-400 m-4 font-semibold text-2xl">
-                Bloqueado por:
-                <span className="text-red-500 ml-2">{false}</span>
-              </p>
-              <p className="text-gray-400 m-4 font-semibold text-2xl">
-                Razón del bloqueo:
-                <span className="text-gray-500 ml-2">{false}</span>
-              </p>
-            </>
+              <div className="col-span-2">
+                <p className="text-gray-400 m-2 font-semibold text-2xl ">
+                  Motivo :<br />
+                  <span className="text-gray-400 ml-2 text-lg break-words">
+                    {account.account_banned.ban_reason.length > 60
+                      ? `${account.account_banned.ban_reason.substring(
+                          0,
+                          60
+                        )}...`
+                      : account.account_banned.ban_reason}
+                  </span>
+                </p>
+              </div>
+            </div>
           )}
 
-          {false && (
-            <>
-              <div className="grid grid-cols-2 gap-8">
-                <p className="text-gray-500 m-2 font-semibold">
-                  Fecha del muteo:
-                  <br />
-                  <span className="text-xs ml-2">{false}</span>
-                </p>
-                <p className="text-gray-500 m-2 font-semibold">
-                  Fecha de desbloqueo:
-                  <br />
-                  <span className="text-xs">{false}</span>
-                </p>
-              </div>
-              <p className="text-gray-700 m-4 font-semibold">
-                Ha sido silenciado por el GM
-                <br />
-                <span className="text-red-500 ml-2">{false}</span>
+          {account.mute && (
+            <div className="grid grid-cols-2 gap-8">
+              <p className="text-gray-400 m-4 font-semibold text-xl">
+                Ha sido silenciado por el GM : <br />
+                <span className="text-red-500 ml-2 text-2xl">
+                  {account.mute_by}
+                </span>
               </p>
-              <p className="text-gray-700 m-4 font-semibold text-xs">
+              <p className="text-gray-400 m-4 font-semibold  text-2xl">
                 Razón del muteo:
                 <br />
-                <span className="text-gray-500 m-2">{false}</span>
+                <span className="text-gray-500 m-2 text-lg">
+                  {account.mute_reason}
+                </span>
               </p>
-            </>
+            </div>
           )}
         </div>
       </div>
-
+      <hr className="border-t-1 border-gray-300 my-4 mx-8" />
+      <div className="text-center mx-auto mt-8 max-w-2xl">
+        <h2 className="mb-5 font-bold text-xl text-gray-400">
+          Fortalece las defensas de tu reino digital con una contraseña sólida y
+          segura. Sé el protagonista de tu epopeya en World of Warcraft,
+          resguardando tus tesoros virtuales con una llave impenetrable.
+        </h2>
+      </div>
       <div className="px-8 pt-6 pb-8 mb-9 ">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
           <div className="mb-4">
@@ -294,4 +301,4 @@ const AccountForm = ({ account, tokenJwt }: ProfileSecurityProps) => {
   );
 };
 
-export default AccountForm;
+export default DetailAccount;

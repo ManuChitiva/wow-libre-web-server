@@ -1,19 +1,19 @@
 "use client";
-import NavbarMinimalist from "@/components/register/navbar";
+
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { ChangeEvent, useEffect } from "react";
 import "./style.css";
+import NavbarMinimalist from "@/components/navbar-minimalist";
 
 const Congrats = () => {
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
-  const username = searchParams.get("username");
   const country = searchParams.get("country");
   const phone = searchParams.get("phone");
   const router = useRouter();
 
-  const handleLinkProfile = () => {
-    router.push("/account");
+  const handleLinkAccounts = () => {
+    router.push("/accounts");
   };
 
   return (
@@ -66,7 +66,7 @@ const Congrats = () => {
               <button
                 className="download-button  text-white text-lg md:text-xl lg:text-2xl xl:text-2xl  "
                 type="button"
-                onClick={handleLinkProfile}
+                onClick={handleLinkAccounts}
               >
                 Crear cuenta de juego
               </button>

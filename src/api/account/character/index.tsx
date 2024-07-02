@@ -3,16 +3,22 @@ import { GenericResponseDto } from "@/dto/generic";
 import { Characters, Friends } from "@/model/model";
 import { v4 as uuidv4 } from "uuid";
 
-export const getCharacters = async (jwt: string): Promise<Characters> => {
+export const getCharacters = async (
+  jwt: string,
+  accountId: string
+): Promise<Characters> => {
   try {
-    const response = await fetch(`${BASE_URL_CHARACTER}/api/character`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + jwt,
-        transaction_id: uuidv4(),
-      },
-    });
+    const response = await fetch(
+      `${BASE_URL_CHARACTER}/api/characters?account_id=${accountId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + jwt,
+          transaction_id: uuidv4(),
+        },
+      }
+    );
     const responseData: GenericResponseDto<Characters> = await response.json();
 
     if (response.ok && response.status === 200) {
@@ -29,12 +35,13 @@ export const getCharacters = async (jwt: string): Promise<Characters> => {
 
 export const getFriends = async (
   jwt: string,
-  characterId: number
+  characterId: number,
+  accountId: string
 ): Promise<Friends> => {
   console.log(characterId);
   try {
     const response = await fetch(
-      `${BASE_URL_CHARACTER}/api/character/${characterId}/friends`,
+      `${BASE_URL_CHARACTER}/api/characters/${characterId}/friends?account_id=${accountId}`,
       {
         method: "GET",
         headers: {

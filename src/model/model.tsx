@@ -4,6 +4,11 @@ export interface CountryModel {
   language: string;
 }
 
+export interface FaqsModel {
+  question: string;
+  answer: string;
+}
+
 export interface ExistEmailModel {
   exist: boolean;
 }
@@ -28,6 +33,7 @@ export interface LoginData {
   jwt: string;
   refresh_token: string;
   expiration_date: string;
+  avatar_url: string;
 }
 
 export interface Characters {
@@ -54,6 +60,7 @@ export interface AccountsModel {
   id: number;
   username: string;
   email: string;
+  logo_expansion: string;
   expansion: string;
   online: boolean;
   failed_logins: string;
@@ -94,6 +101,15 @@ interface AccountWeb {
   verified: boolean;
 }
 
+interface AccountBanned {
+  id: number;
+  bandate: string;
+  unbandate: string;
+  banned_by: string;
+  ban_reason: string;
+  active: boolean;
+}
+
 export interface AccountDetailDto {
   id: number;
   username: string;
@@ -109,6 +125,7 @@ export interface AccountDetailDto {
   last_login: string;
   os: string;
   account_web: AccountWeb;
+  account_banned: AccountBanned;
 }
 
 export interface AccountChangePasswordGameDto {
@@ -116,4 +133,69 @@ export interface AccountChangePasswordGameDto {
   verifier: string;
   account_id: number;
   password: string;
+}
+
+interface Mails {
+  id: number;
+  message_type: number;
+  sender_name: string;
+  subject: string;
+  body: string;
+  has_items: boolean;
+  expire_time: string;
+  deliver_time: string;
+  money: number;
+}
+
+export interface MailsDto {
+  mails: Mails[];
+  size: number;
+}
+
+export interface GuildDto {
+  id: number;
+  name: string;
+  avatar: string;
+  leader_name: string;
+  emblem_style: number;
+  emblem_color: number;
+  border_style: number;
+  border_color: number;
+  info: string;
+  motd: string;
+  create_date: string;
+  bank_money: number;
+  members: number;
+}
+
+export interface GuildsDto {
+  guilds: GuildDto[];
+  size: number;
+}
+
+export interface GuildData {
+  id: number;
+  name: string;
+  leader_name: string;
+  emblem_style: number;
+  emblem_color: number;
+  border_style: number;
+  border_color: number;
+  info: string;
+  motd: string;
+  create_date: string;
+  bank_money: number;
+  members: number;
+  benefits: Benefit[];
+}
+
+interface Benefit {
+  id: number;
+  guild_id: number;
+  logo: string;
+  acquisition_date: string;
+  expiration_date: string;
+  title: string;
+  sub_title: string;
+  description: string;
 }

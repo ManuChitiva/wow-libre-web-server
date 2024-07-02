@@ -13,19 +13,21 @@ export interface UserModel {
   cell_phone: string;
   email: string;
   logged_in: boolean;
+  avatar: string;
 }
 
 const initialUserData: UserModel = {
   id: null,
   username: "",
   country: "",
-  language: "es",
+  language: "en",
   date_of_birth: null,
   first_name: "",
   last_name: "",
   cell_phone: "",
   email: "",
   logged_in: false,
+  avatar: "",
 };
 
 // Definición del contexto y sus tipos
@@ -66,7 +68,8 @@ const UserProvider = ({ children }: UserProviderProps) => {
   const clearUserData = () => {
     localStorage.removeItem("user");
     setUser(initialUserData);
-    Cookies.remove("jwt");
+    Cookies.remove("token");
+    Cookies.remove("refresh_token");
   };
 
   return (

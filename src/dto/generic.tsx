@@ -42,17 +42,11 @@ export class GenericClientError extends Error {
 
 export class InternalServerError extends Error {
   public statusCode: number;
-  public responseData: GenericResponseImpl<void>;
 
-  constructor(
-    message: string,
-    statusCode: number,
-    responseData: GenericResponseImpl<void>
-  ) {
+  constructor(message: string, statusCode: number) {
     super(message);
     this.name = this.constructor.name;
     this.statusCode = statusCode;
-    this.responseData = responseData;
     Object.setPrototypeOf(this, new.target.prototype);
   }
 }

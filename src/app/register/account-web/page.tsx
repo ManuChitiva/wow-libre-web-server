@@ -1,10 +1,9 @@
 "use client";
 
 import PageCounter from "@/components/register/counter";
-import NavbarMinimalist from "@/components/register/navbar";
+import NavbarMinimalist from "@/components/navbar-minimalist";
 import TitleWow from "@/components/title";
 import { useUserContext } from "@/context/UserContext";
-import { encryptPassword } from "@/security";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, useState } from "react";
 import Swal from "sweetalert2";
@@ -13,7 +12,7 @@ import { registerAccountWeb } from "@/api/account/register";
 import { AccountWebRequestDto } from "@/model/model";
 import Cookies from "js-cookie";
 
-const AccountIngame = () => {
+const AccountWeb = () => {
   const { user, setUser, clearUserData } = useUserContext();
   const language = user.language;
   const country = user.country;
@@ -21,6 +20,7 @@ const AccountIngame = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const router = useRouter();
+  const [avatar, setAvatar] = useState("");
 
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
@@ -91,9 +91,34 @@ const AccountIngame = () => {
       };
 
       const response = await registerAccountWeb(requestBody);
-      console.log(response.jwt);
-      Cookies.set("token", response.jwt, { expires: 7 });
-      Cookies.set("refresh_token", response.refresh_token, { expires: 7 });
+      const { jwt, refresh_token, expiration_date, avatar_url } = response;
+      const expirationDateUTC = new Date(expiration_date).toUTCString();
+
+      setUser({
+        id: null,
+        username: "",
+        country: country,
+        language: language,
+        date_of_birth: null,
+        first_name: "",
+        last_name: "",
+        cell_phone: "",
+        email: "",
+        logged_in: true,
+        avatar: avatar_url,
+      });
+
+      Cookies.set("token", jwt, {
+        expires: new Date(expirationDateUTC),
+        secure: true,
+        sameSite: "Strict",
+      });
+
+      Cookies.set("refresh_token", refresh_token, {
+        expires: new Date(expirationDateUTC),
+        secure: true,
+        sameSite: "Strict",
+      });
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -104,20 +129,7 @@ const AccountIngame = () => {
       });
       return;
     }
-    clearUserData();
 
-    setUser({
-      id: null,
-      username: "",
-      country: country,
-      language: language,
-      date_of_birth: null,
-      first_name: "",
-      last_name: "",
-      cell_phone: "",
-      email: "",
-      logged_in: true,
-    });
     router.push(
       `/congrats?email=${user.email}&country=${user.country}&phone=${user.cell_phone}`
     );
@@ -153,6 +165,7 @@ const AccountIngame = () => {
               type="password"
               placeholder="Ingrese su contraseña"
               value={password}
+              autoComplete="new-password"
               onChange={handlePasswordChange}
             />
           </div>
@@ -167,6 +180,7 @@ const AccountIngame = () => {
             <input
               className="mb-3 px-4 py-2 border rounded-md text-black register-input"
               type="password"
+              autoComplete="new-password"
               placeholder="Ingrese nuevamente su contraseña"
               value={confirmPassword}
               onChange={handleConfirmPasswordChange}
@@ -182,8 +196,8 @@ const AccountIngame = () => {
           </button>
           <button
             className="text-white px-5 py-5 rounded-md mt-8 button-register"
-            type="button" // Asegúrate de cambiar el tipo a "button"
-            onClick={handleVolverClick} // Agrega el evento onClick
+            type="button"
+            onClick={handleVolverClick}
           >
             Volver
           </button>
@@ -193,4 +207,4 @@ const AccountIngame = () => {
   );
 };
 
-export default AccountIngame;
+export default AccountWeb;

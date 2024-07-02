@@ -1,12 +1,12 @@
 "use client";
 
 import PageCounter from "@/components/register/counter";
-import NavbarMinimalist from "@/components/register/navbar";
 import TitleWow from "@/components/title";
 import React, { ChangeEvent, useState } from "react";
 import "../style.css";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import NavbarMinimalist from "@/components/navbar-minimalist";
 
 const TermsAndConditions = () => {
   const router = useRouter();

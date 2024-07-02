@@ -1,13 +1,13 @@
 "use client";
 
 import PageCounter from "@/components/register/counter";
-import NavbarMinimalist from "@/components/register/navbar";
 import TitleWow from "@/components/title";
 import { useUserContext } from "@/context/UserContext";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, useState } from "react";
 import Swal from "sweetalert2";
 import "../style.css";
+import NavbarMinimalist from "@/components/navbar-minimalist";
 
 const crypto = require("crypto");
 

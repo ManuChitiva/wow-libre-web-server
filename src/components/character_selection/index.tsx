@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import { Character } from "@/model/model";
 import DisplayMoney from "../money";
 
@@ -53,7 +51,7 @@ const CharacterSelection: React.FC<CharacterSelectionProps> = ({
           </option>
         ))}
       </select>
-      {selectedCharacter && DisplayMoney(selectedCharacter.money)}
+      {selectedCharacter && <DisplayMoney money={selectedCharacter.money} />}
     </div>
   );
 };

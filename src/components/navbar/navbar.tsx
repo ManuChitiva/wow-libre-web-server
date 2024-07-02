@@ -1,13 +1,18 @@
+"use client";
+
 import React from "react";
 import "./style.css";
 import Searcher from "../search/searcher";
 import Link from "next/link";
 import NavbarAuth from "./auth";
+import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
   const handleSearch = (query: string) => {
     console.log("Buscar:", query);
   };
+
+  const { t, i18n } = useTranslation();
 
   return (
     <div className="navbar contenedor">
@@ -34,25 +39,22 @@ const Navbar = () => {
         </a>
       </div>
       <div className="nav-ubication">
-        <a className="text-white">
-          Ingrese tu <br />
-          ubicación
-        </a>
+        <a className="text-white">{t("navbar.language")}</a>
       </div>
       <div className="nav-category">
         <nav className="category">
-          <a className="category-link" href="#">
-            Categorias
-          </a>
-          <a className="category-link" href="#">
+          <Link className="category-link" href="/guild">
+            Hermandades
+          </Link>
+          <Link className="category-link" href="/comunity">
             Comunidad
-          </a>
-          <a className="category-link" href="#">
-            Historial
-          </a>
-          <a className="category-link" href="#">
-            Vender
-          </a>
+          </Link>
+          <Link className="category-link" href="/comunity">
+            Banco
+          </Link>
+          <Link className="category-link" href="/comunity">
+            Tienda
+          </Link>
 
           <Link className="category-link" href="/help">
             Ayuda

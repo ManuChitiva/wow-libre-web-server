@@ -8,9 +8,10 @@ import { getFriends } from "@/api/account/character";
 interface CharacterProps {
   character: Character;
   token: string | null;
+  account_id: string;
 }
 
-const Friend: React.FC<CharacterProps> = ({ character, token }) => {
+const Friend: React.FC<CharacterProps> = ({ character, token, account_id }) => {
   const [friendsModel, setFriends] = useState<Friends | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +30,11 @@ const Friend: React.FC<CharacterProps> = ({ character, token }) => {
     const fetchData = async () => {
       try {
         if (character && token) {
-          const response: Friends = await getFriends(token, character.id);
+          const response: Friends = await getFriends(
+            token,
+            character.id,
+            account_id
+          );
           setFriends(response);
         }
       } catch (error) {
@@ -80,11 +85,11 @@ const Friend: React.FC<CharacterProps> = ({ character, token }) => {
       <h2 className="text-2xl font-semibold mb-4 text-white ">
         Lista de Amigos
       </h2>
-      <div className="grid grid-cols-3 gap-4  ">
+      <div className="grid grid-cols-3 gap-4 ">
         {currentFriends.map((friend) => (
           <div
             key={friend.id}
-            className="bg-slate-200 rounded-lg shadow-md p-4 overflow-hidden cursor-pointer"
+            className=" rounded-2xl shadow-2xl border border-gray-600 p-4 overflow-hidden cursor-pointer"
             onClick={() => openModal(friend)} // Pasa el ID del amigo al hacer clic
           >
             <img
@@ -92,22 +97,24 @@ const Friend: React.FC<CharacterProps> = ({ character, token }) => {
               alt={`Avatar de ${friend.name}`}
               className="w-20 h-20 rounded-full mx-auto mb-2"
             />
-            <h3 className="text-2xl font-semibold text-amber-400">
-              {friend.name}
-            </h3>
-            <p className="text-black overflow-hidden overflow-ellipsis whitespace-nowrap">
-              Level: {friend.level}
+            <div className="text-center">
+              <h3 className="pt-2 text-3xl font-semibold text-white">
+                {friend.name}
+              </h3>
+            </div>
+            <p className="text-white overflow-hidden overflow-ellipsis whitespace-nowrap">
+              Nivel: {friend.level}
             </p>
-            <p className="text-black  overflow-hidden overflow-ellipsis whitespace-nowrap">
-              Class: {friend.class}
+            <p className="text-white  overflow-hidden overflow-ellipsis whitespace-nowrap">
+              Clase: {friend.class}
             </p>
-            <p className="text-black overflow-hidden overflow-ellipsis whitespace-nowrap">
-              Race: {friend.race}
+            <p className="text-white overflow-hidden overflow-ellipsis whitespace-nowrap">
+              Raza: {friend.race}
             </p>
-            <p className="text-black  overflow-hidden overflow-ellipsis whitespace-nowrap">
-              Status: {friend.flags}
+            <p className="text-white  overflow-hidden overflow-ellipsis whitespace-nowrap">
+              Estado: {friend.flags}
             </p>
-            <p className="text-black  overflow-hidden overflow-ellipsis whitespace-nowrap">
+            <p className="text-white  overflow-hidden overflow-ellipsis whitespace-nowrap">
               Nota: {friend.note}
             </p>
           </div>
@@ -134,6 +141,7 @@ const Friend: React.FC<CharacterProps> = ({ character, token }) => {
           </div>
         </>
       )}
+
       <ReactPaginate
         forcePage={currentPage}
         previousLabel={"Anterior"}
@@ -144,10 +152,22 @@ const Friend: React.FC<CharacterProps> = ({ character, token }) => {
         pageRangeDisplayed={3}
         onPageChange={handlePageClick}
         containerClassName={"pagination flex justify-center mt-6"}
-        pageClassName={"pagination flex justify-center"}
+        pageClassName={"page-item inline-block mx-1"}
+        pageLinkClassName={"page-link px-3 py-1 border-gray-300 rounded "}
         activeClassName={"active"}
+        activeLinkClassName={"active-link  text-blue-200"}
         previousClassName={"inline-block mr-2"}
-        nextClassName={"inline-block ml-4 "}
+        previousLinkClassName={
+          "previous-link px-3 py-1  border-gray-300 rounded text-white "
+        }
+        nextClassName={"inline-block ml-4"}
+        nextLinkClassName={
+          "next-link px-3 py-1  border-gray-300 rounded text-white "
+        }
+        breakClassName={"break-item"}
+        breakLinkClassName={
+          "break-link px-3 py-1 border border-gray-300 rounded text-gray-500"
+        }
       />
     </div>
   );

@@ -3,16 +3,18 @@ import Bidding from "@/components/home/bidding";
 import SliderHome from "@/components/home/slider";
 import Subscription from "@/components/home/subscription";
 import Us from "@/components/home/us";
+import Navbar from "@/components/navbar/navbar";
 
 const Home = () => {
   return (
-    <div>
+    <>
+      <Navbar />
       <Advertising />
       <SliderHome />
       <Bidding />
       <Us />
       <Subscription />
-    </div>
+    </>
   );
 };
 export default Home;

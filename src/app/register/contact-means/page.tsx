@@ -1,7 +1,7 @@
 "use client";
 
 import PageCounter from "@/components/register/counter";
-import NavbarMinimalist from "@/components/register/navbar";
+import NavbarMinimalist from "@/components/navbar-minimalist";
 import TitleWow from "@/components/title";
 import { useUserContext } from "@/context/UserContext";
 import { useRouter } from "next/navigation";
