@@ -10,12 +10,14 @@ import Swal from "sweetalert2";
 import "../style.css";
 import { ExistEmailModel } from "@/model/model";
 import { existEmail } from "@/api/account/exist-email";
+import { useTranslation } from "react-i18next";
 
 const ContactMeans = () => {
-  const { user, setUser } = useUserContext(); // Obteniendo el contexto y funciones del contexto
+  const { user, setUser } = useUserContext();
   const [email, setEmail] = useState("");
   const [cellPhone, setCellPhone] = useState("");
   const router = useRouter();
+  const { t } = useTranslation();
 
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -35,23 +37,35 @@ const ContactMeans = () => {
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // Validaciones
     if (!email.trim()) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Por favor, ingrese su correo electrónico.",
+        text: t("register.error.email-empty"),
         color: "white",
         background: "#0B1218",
         timer: 43500,
       });
       return;
     }
+
     if (!isValidEmail(email)) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Por favor, ingrese un correo electrónico válido.",
+        text: t("register.error.email-invalid"),
+        color: "white",
+        background: "#0B1218",
+        timer: 43500,
+      });
+      return;
+    }
+
+    if (!cellPhone.trim()) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: t("register.error.phone-empty"),
         color: "white",
         background: "#0B1218",
         timer: 43500,
@@ -66,7 +80,7 @@ const ContactMeans = () => {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "El correo electrónico ingresado ya está registrado. Por favor, ingrese otro correo electrónico.",
+          text: t("register.error.email-exist"),
           color: "white",
           background: "#0B1218",
           timer: 43500,
@@ -74,11 +88,11 @@ const ContactMeans = () => {
 
         return;
       }
-    } catch (error) {
+    } catch (error: any) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "No fue posible validar su información, por favor intente nuevamente más tarde.",
+        text: `${error.message}`,
         color: "white",
         background: "#0B1218",
         timer: 43500,
@@ -102,8 +116,8 @@ const ContactMeans = () => {
 
   useEffect(() => {
     if (user) {
-      setEmail(user.email || "");
-      setCellPhone(user.cell_phone || "");
+      setEmail(user.email);
+      setCellPhone(user.cell_phone);
     }
   }, [setUser]);
 
@@ -113,23 +127,28 @@ const ContactMeans = () => {
 
       <div className="register-container">
         <TitleWow
-          title=" Registrarme en "
-          description="Esto es lo que utilizarás cuando inicies sesión en los sitios web y aplicaciones móviles."
+          title={t("register.title-server-sub-title")}
+          description={t(
+            "register.section-page.contact-means.title-server-message"
+          )}
         />
 
         <form className="register-container-form" onSubmit={handleFormSubmit}>
           <div className="form-group">
             <label
-              htmlFor="countrySelect"
+              htmlFor="emailInput"
               className="mb-2 register-container-form-label"
             >
-              Correo Electronico
+              {t("register.section-page.contact-means.input.email-text")}
             </label>
 
             <input
               className="mb-3 px-4 py-2 border rounded-md text-black register-input"
-              type="text"
-              placeholder="Ingrese su correo electronico"
+              type="email"
+              id="emailInput"
+              placeholder={t(
+                "register.section-page.contact-means.input.email-text-place-holder"
+              )}
               value={email}
               onChange={handleEmailChange}
             />
@@ -137,15 +156,18 @@ const ContactMeans = () => {
 
           <div className="form-group">
             <label
-              htmlFor="firstNameInput"
+              htmlFor="phoneInput"
               className="mb-2 register-container-form-label"
             >
-              Número de teléfono{" "}
+              {t("register.section-page.contact-means.input.phone-text")}
             </label>
             <input
+              id="phoneInput"
               className="mb-3 px-4 py-2 border rounded-md text-black register-input"
               type="number"
-              placeholder="Ingrese un telefono de contacto."
+              placeholder={t(
+                "register.section-page.contact-means.input.phone-text-place-holder"
+              )}
               value={cellPhone}
               onChange={handleCellPhoneChange}
             />
@@ -156,14 +178,14 @@ const ContactMeans = () => {
             className=" text-white px-5 py-5 rounded-md mt-8 button-register"
             type="submit"
           >
-            Continuar
+            {t("register.section-page.contact-means.button.btn-primary")}
           </button>
           <button
             className="text-white px-5 py-5 rounded-md mt-8 button-register"
-            type="button" // Asegúrate de cambiar el tipo a "button"
-            onClick={handleVolverClick} // Agrega el evento onClick
+            type="button"
+            onClick={handleVolverClick}
           >
-            Volver
+            {t("register.section-page.contact-means.button.btn-secondary")}
           </button>
         </form>
       </div>

@@ -1,0 +1,56 @@
+.custom-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.custom-arrow-left {
+  left: 1px; /* Ajusta la distancia desde el borde izquierdo */
+}
+
+.custom-arrow-right {
+  right: 150px; /* Ajusta la distancia desde el borde derecho */
+}
+
+.custom-arrow:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Contenedor del carrusel */
+.professions-carousel-container {
+  position: relative;
+}
+
+.carousel-container {
+  position: relative;
+}
+
+/* Otros estilos */
+.carousel-slide {
+  flex: 0 0 auto;
+  width: 120%;
+  padding-top: 2rem;
+  scroll-snap-align: start;
+  margin-right: 20px; /* Espacio entre cada slide */
+}
+
+.carousel-slide img {
+  width: 80%;
+  height: auto;
+  border-radius: 8px;
+}
+
+@media (min-width: 768px) {
+  .carousel-slide {
+    width: 100%;
+  }
+}
+.select-none {
+  user-select: none;
+}

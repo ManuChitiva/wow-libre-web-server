@@ -7,24 +7,34 @@ import { getAccounts } from "@/api/account";
 import Link from "next/link";
 import { useUserContext } from "@/context/UserContext";
 import "./style.css";
-import { useRouter } from "next/navigation";
 import LoadingSpinner from "@/components/loading-spinner";
 import NavbarAuthenticated from "@/components/navbar-authenticated";
 import { InternalServerError } from "@/dto/generic";
+import { useRouter } from "next/navigation";
+import useAuth from "@/hook/useAuth";
+
+const LimitAccountRegister = 10;
 
 const Page = () => {
-  const jwt = Cookies.get("token");
+  const router = useRouter();
+  const { clearUserData } = useUserContext();
+  const token = Cookies.get("token");
+
   const [accounts, setAccounts] = useState<AccountsModel[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [dropdownVisible, setDropdownVisible] = useState<boolean>(false);
-  const router = useRouter();
-  const { clearUserData } = useUserContext();
+  useAuth();
 
   useEffect(() => {
+    if (!token) {
+      router.push("/");
+      return;
+    }
+
     const fetchData = async () => {
       try {
-        const fetchedAccounts = await getAccounts(jwt || "");
+        const fetchedAccounts = await getAccounts(token);
         setAccounts(fetchedAccounts);
         setLoading(false);
       } catch (error: any) {
@@ -94,7 +104,7 @@ const Page = () => {
       </div>
     );
   }
-  const accountMaximus = accounts && accounts.length > 10;
+  const accountMaximus = accounts && accounts.length > LimitAccountRegister;
 
   return (
     <div className="contenedor dark h-screen-md">
@@ -170,7 +180,7 @@ const Page = () => {
               </div>
             </div>
 
-            <label htmlFor="table-search" className="sr-only">
+            <label htmlFor="table-search-users" className="sr-only">
               Search
             </label>
             <div className="relative pr-2">
@@ -184,9 +194,9 @@ const Page = () => {
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
                   />
                 </svg>

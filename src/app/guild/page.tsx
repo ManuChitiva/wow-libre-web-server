@@ -21,6 +21,7 @@ const Guild = () => {
           currentPage,
           accountsPerPage
         );
+
         setGuilds(response.guilds);
       } catch (error) {
         console.error("Ha ocurrido un error al obtener los personajes", error);
@@ -150,7 +151,7 @@ const Guild = () => {
             </div>
             <input
               type="text"
-              id="table-search-users"
+              id="table-search"
               className="block p-2 ps-10 text-lg text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Buscar por usuario"
               value={searchTerm}
@@ -217,8 +218,12 @@ const Guild = () => {
                 <td className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                   <img
                     className="w-10 h-10 rounded-full"
-                    src={row.avatar}
-                    alt="Icon Version Wow"
+                    src={
+                      row.avatar != null
+                        ? row.avatar
+                        : "/img/guilds/guild_default.jpg"
+                    }
+                    alt="icon-guild-default"
                   />
                   <div className="ps-3">
                     <div className="text-base font-semibold">{row.name}</div>

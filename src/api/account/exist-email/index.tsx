@@ -1,17 +1,21 @@
 import { BASE_URL_AUTH } from "@/configs/configs";
 import { GenericResponseDto } from "@/dto/generic";
-import { CountryModel, ExistEmailModel } from "@/model/model";
+import { ExistEmailModel } from "@/model/model";
 import { v4 as uuidv4 } from "uuid";
 
 export const existEmail = async (email: string): Promise<ExistEmailModel> => {
+  const transactionId = uuidv4();
+
   try {
     const response = await fetch(
-      `${BASE_URL_AUTH}/api/account/search?email=${encodeURIComponent(email)}`,
+      `${BASE_URL_AUTH}/api/account/web/search?email=${encodeURIComponent(
+        email
+      )}`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          transaction_id: uuidv4(),
+          transaction_id: transactionId,
         },
       }
     );
@@ -22,13 +26,15 @@ export const existEmail = async (email: string): Promise<ExistEmailModel> => {
     if (response.ok && response.status === 200) {
       return responseData.data;
     } else {
-      const errorMessage = await response.text();
-      throw new Error(`Error [${response.status}]: ${errorMessage}`);
+      const errorGeneric: GenericResponseDto<void> = await response.json();
+      throw new Error(
+        `${errorGeneric.message} - TransactionId: ${transactionId}`
+      );
     }
   } catch (error: any) {
     console.error(`Error: ${error.message}`, error);
     throw new Error(
-      `It was not possible to obtain the available countries: ${error.message}`
+      `It was not possible to validate the client's email: ${error.message}`
     );
   }
 };

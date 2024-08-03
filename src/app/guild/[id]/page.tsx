@@ -1,29 +1,75 @@
 "use client";
 import { getGuild } from "@/api/guilds";
+import GuildCharacter from "@/components/guild_character";
+import LoadingSpinner from "@/components/loading-spinner";
 import NavbarAuthenticated from "@/components/navbar-authenticated";
 import { useUserContext } from "@/context/UserContext";
 import { GuildData } from "@/model/model";
 import Link from "next/link";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import { BenefitsModel } from "@/model/benefit-model";
+import { benefitsActive } from "@/api/benefit";
+import Swal from "sweetalert2";
+import DisplayMoney from "@/components/money";
 
 const GuildDetail = () => {
   const guildId = useParams<{ id: string }>();
   const [guild, setGuild] = useState<GuildData>();
-  const { user } = useUserContext();
+  const token = Cookies.get("token");
+  const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar la visibilidad del modal
+  const [isLoading, setIsLoading] = useState(true);
+  const [loggin, setLoggin] = useState(false);
+  const [benefits, setBenefits] = useState<BenefitsModel[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response: GuildData = await getGuild(guildId.id);
-        setGuild(response);
-      } catch (error) {
-        console.error("Ha ocurrido un error al obtener los personajes", error);
+        const [guildsResponse, benefitsResponse] = await Promise.all([
+          getGuild(guildId.id),
+          benefitsActive(),
+        ]);
+        setGuild(guildsResponse);
+        setBenefits(benefitsResponse);
+        setIsLoading(false);
+      } catch (error: any) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: `${error.message}`,
+          color: "white",
+          background: "#0B1218",
+          willClose: () => {
+            router.push("/guild");
+          },
+        }).then((result) => {
+          if (result.isConfirmed) {
+            router.push("/guild");
+          }
+        });
       }
     };
-
     fetchData();
-  }, []);
+    setLoggin(token != null);
+  }, [token]);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center mt-20 items-center">
+        <LoadingSpinner />;
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -38,31 +84,34 @@ const GuildDetail = () => {
       >
         <div className="contenedor mx-auto px-6 py-12 lg:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="flex flex-col justify-between max-w-2xl">
+            <div className="flex flex-col justify-between max-w-2xl w-full">
               <div>
                 <h2 className="text-3xl lg:text-4xl font-bold mb-10">
                   Hermandad: {guild?.name}
                 </h2>
-                <p className="text-lg lg:text-2xl mb-4">{guild?.info}</p>
+                <p className="text-lg lg:text-2xl mb-4 break-words">
+                  {guild?.info}
+                </p>
               </div>
               <div>
-                {user.logged_in ? (
-                  <Link
-                    href="/login"
-                    className="px-6 py-3 bg-blue-500 hover:bg-blue-600 rounded-lg text-white font-semibold mb-4"
-                  >
-                    Unirme
-                  </Link>
+                {loggin ? (
+                  <>
+                    <button
+                      onClick={openModal}
+                      className="px-6 py-3 bg-blue-500 hover:bg-blue-600 rounded-lg text-white font-semibold mb-4"
+                    >
+                      Vincularme
+                    </button>
+                  </>
                 ) : (
                   <Link
-                    href="/login"
+                    href="/register"
                     className="px-6 py-3 bg-blue-500 hover:bg-blue-600 rounded-lg text-white font-semibold mb-4"
                   >
-                    Ingresar
+                    Registrarme
                   </Link>
                 )}
-
-                <p className="text-lg pt-4">{guild?.motd}</p>
+                <p className="text-lg pt-4 break-words">{guild?.motd}</p>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4 lg:gap-8">
@@ -106,8 +155,8 @@ const GuildDetail = () => {
               <dt className="text-lg leading-7 text-white">
                 Dinero de la guild
               </dt>
-              <dd className="order-first text-3xl font-semibold tracking-tight text-white sm:text-5xl">
-                {guild?.bank_money}
+              <dd className="order-first text-4xl font-semibold tracking-tight text-white sm:text-4xl">
+                <DisplayMoney money={guild?.bank_money || 0} />
               </dd>
             </div>
           </dl>
@@ -208,11 +257,11 @@ const GuildDetail = () => {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    stroke-width="2"
+                    strokeWidth="2"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M15 19l-7-7 7-7"
                     />
                   </svg>
@@ -228,11 +277,11 @@ const GuildDetail = () => {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    stroke-width="2"
+                    strokeWidth="2"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M9 5l7 7-7 7"
                     />
                   </svg>
@@ -257,150 +306,49 @@ const GuildDetail = () => {
             </p>
 
             <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-16 md:grid-cols-2 xl:grid-cols-3">
-              <div className="flex flex-col items-center p-6 space-y-3 text-center bg-gray-100 rounded-xl dark:bg-gray-800">
-                <span className="inline-block p-3 text-blue-500 bg-blue-100 rounded-full dark:text-white dark:bg-blue-500">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-6 h-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
-                    />
-                  </svg>
-                </span>
-
-                <h1 className="text-xl font-semibold text-gray-700 capitalize dark:text-white">
-                  Disponer de 500 miembros
-                </h1>
-
-                <p className="text-gray-500 dark:text-gray-300 text-xl">
-                  Logra obtener tus primeros 500 miembros en tu hermandad y
-                  podras obtener la montura
-                </p>
-                <br />
-
-                <a
-                  href="https://www.wowhead.com/wotlk/es/item=49284/riendas-del-tigre-espectral-presto"
-                  data-wh-icon-size="small"
-                  className="flex items-center -mx-1 text-lg text-blue-500 capitalize transition-colors duration-300 transform dark:text-blue-400 hover:underline hover:text-blue-600 dark:hover:text-blue-500"
+              {benefits.map((benefit) => (
+                <div
+                  key={benefit.id}
+                  className="flex flex-col items-center p-6 space-y-3 text-center bg-gray-100 rounded-xl dark:bg-gray-800"
                 >
-                  <span className="mx-1">Detalle de la montura</span>
-                  <svg
-                    className="w-4 h-4 mx-1 rtl:-scale-x-100"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                      clip-rule="evenodd"
-                    ></path>
-                  </svg>
-                </a>
-              </div>
-
-              <div className="flex flex-col items-center p-6 space-y-3 text-center bg-gray-100 rounded-xl dark:bg-gray-800">
-                <span className="inline-block p-3 text-blue-500 bg-blue-100 rounded-full dark:text-white dark:bg-blue-500">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-6 h-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+                  <span className="inline-block p-3 text-blue-500  ">
+                    <img
+                      src={benefit.logo}
+                      alt="Logo"
+                      className="w-40 h-40 rounded-full "
                     />
-                  </svg>
-                </span>
+                  </span>
 
-                <h1 className="text-xl font-semibold text-gray-700 capitalize dark:text-white">
-                  Banco con todas las casillas
-                </h1>
+                  <h1 className="text-xl font-semibold text-gray-700 capitalize dark:text-white">
+                    {benefit.title}
+                  </h1>
 
-                <p className="text-gray-500 dark:text-gray-300 text-xl">
-                  Si tu guild tiene un banco con todas las casillas disponibles,
-                  tu hermandad ganará un compañero.
-                </p>
-                <br />
+                  <p className="text-gray-500 dark:text-gray-300 text-xl">
+                    {benefit.description}
+                  </p>
+                  <br />
 
-                <a
-                  href="https://www.wowhead.com/wotlk/es/spell=45174/cerdo-de-oro"
-                  className="flex items-center -mx-1 text-lg text-blue-500 capitalize transition-colors duration-300 transform dark:text-blue-400 hover:underline hover:text-blue-600 dark:hover:text-blue-500"
-                >
-                  <span className="mx-1">Detalle del compañero</span>
-                  <svg
-                    className="w-4 h-4 mx-1 rtl:-scale-x-100"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <a
+                    href={`${benefit.link}`}
+                    data-wh-icon-size="small"
+                    className="flex items-center -mx-1 text-lg text-blue-500 capitalize transition-colors duration-300 transform dark:text-blue-400 hover:underline hover:text-blue-600 dark:hover:text-blue-500"
                   >
-                    <path
-                      fill-rule="evenodd"
-                      d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                      clip-rule="evenodd"
-                    ></path>
-                  </svg>
-                </a>
-              </div>
-
-              <div className="flex flex-col items-center p-6 space-y-3 text-center bg-gray-100 rounded-xl dark:bg-gray-800">
-                <span className="inline-block p-3 text-blue-500 bg-blue-100 rounded-full dark:text-white dark:bg-blue-500">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-6 h-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
-                    />
-                  </svg>
-                </span>
-
-                <h1 className="text-xl font-semibold text-gray-700 capitalize dark:text-white">
-                  Acumulador
-                </h1>
-
-                <p className="text-gray-500 dark:text-gray-300 text-xl">
-                  Debes lograr obtener 50k de oro alojado en el banco de la
-                  hermandad, tener en cuenta que los 50k alojados en el banco de
-                  la hermandad seran tomados para el banco del servidor.
-                </p>
-
-                <a
-                  href="https://www.wowhead.com/wotlk/es/item=45802/riendas-de-protodraco-herrumbroso"
-                  className="flex items-center -mx-1 text-lg text-blue-500 capitalize transition-colors duration-300 transform dark:text-blue-400 hover:underline hover:text-blue-600 dark:hover:text-blue-500"
-                >
-                  <span className="mx-1">Detalle de la montura</span>
-                  <svg
-                    className="w-4 h-4 mx-1 rtl:-scale-x-100"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                      clip-rule="evenodd"
-                    ></path>
-                  </svg>
-                </a>
-              </div>
+                    <span className="mx-1">Detalle del ítem</span>
+                    <svg
+                      className="w-4 h-4 mx-1 rtl:-scale-x-100"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      ></path>
+                    </svg>
+                  </a>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -417,37 +365,49 @@ const GuildDetail = () => {
           </p>
 
           <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-2">
-            {guild?.benefits.map((benefit) => (
-              <div
-                key={benefit.id}
-                className="px-12 py-8 transition-colors duration-300 transform border cursor-pointer rounded-xl hover:border-transparent group hover:bg-gray-800 dark:border-gray-700 dark:hover:border-transparent"
-              >
-                <div className="flex flex-col sm:-mx-4 sm:flex-row">
-                  <img
-                    className="flex-shrink-0 object-cover w-24 h-24 rounded-full sm:mx-4 ring-4 ring-gray-300"
-                    src={benefit.logo}
-                    alt=""
-                  />
+            {guild?.benefits && guild?.benefits.length > 0 ? (
+              guild.benefits.map((benefit) => (
+                <div
+                  key={benefit.id}
+                  className="px-12 py-8 transition-colors duration-300 transform border cursor-pointer rounded-xl hover:border-transparent group hover:bg-gray-800 dark:border-gray-700 dark:hover:border-transparent"
+                >
+                  <div className="flex flex-col sm:-mx-4 sm:flex-row">
+                    <img
+                      className="flex-shrink-0 object-cover w-24 h-24 rounded-full sm:mx-4 ring-4 ring-gray-300"
+                      src={benefit.logo}
+                      alt=""
+                    />
 
-                  <div className="mt-4 sm:mx-4 sm:mt-0">
-                    <h1 className="text-xl font-semibold text-gray-700 capitalize md:text-2xl dark:text-white group-hover:text-white">
-                      {benefit.title}
-                    </h1>
+                    <div className="mt-4 sm:mx-4 sm:mt-0">
+                      <h1 className="text-xl font-semibold text-gray-700 capitalize md:text-2xl dark:text-white group-hover:text-white">
+                        {benefit.title}
+                      </h1>
 
-                    <p className="mt-2 text-gray-500 capitalize dark:text-gray-300 group-hover:text-gray-300 text-lg">
-                      {benefit.sub_title}
-                    </p>
+                      <p className="mt-2 text-gray-500 capitalize dark:text-gray-300 group-hover:text-gray-300 text-lg">
+                        {benefit.sub_title}
+                      </p>
+                    </div>
                   </div>
                 </div>
-
-                <p className="mt-10 text-gray-500 dark:text-gray-300 group-hover:text-gray-300">
-                  {benefit.description}
+              ))
+            ) : (
+              <div className="col-span-full flex justify-center items-center">
+                <p className="text-center text-gray-500 dark:text-gray-300  ">
+                  Esta hermandad no cuenta con beneficios aún
                 </p>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </section>
+      {token && (
+        <GuildCharacter
+          isOpen={isModalOpen}
+          token={token}
+          guild_id={guildId.id}
+          onClose={closeModal}
+        />
+      )}
     </div>
   );
 };

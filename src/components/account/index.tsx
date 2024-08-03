@@ -128,7 +128,6 @@ const DetailAccount = ({ account, token }: ProfileSecurityProps) => {
                 : "text-green-500"
             }`}
           >
-            Su cuenta está:{" "}
             {account.account_banned ? "Inhabilitada" : "Disponible"}
           </h3>
 

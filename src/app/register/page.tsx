@@ -14,7 +14,8 @@ import { useTranslation } from "react-i18next";
 import NavbarMinimalist from "@/components/navbar-minimalist";
 
 const defaultCountryOptions: CountryModel[] = [
-  { value: "Otro", label: "Otro", language: "es" },
+  { value: "Otro", label: "Otro", language: "pt" },
+  { value: "Others", label: "Others", language: "en" },
 ];
 
 const Register = () => {
@@ -79,12 +80,8 @@ const Register = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const fetchedCountryOptions = await getAvailableCountries();
-        setCountryOptions(fetchedCountryOptions);
-      } catch (error) {
-        setCountryOptions(defaultCountryOptions);
-      }
+      const fetchedCountryOptions = await getAvailableCountries();
+      setCountryOptions(fetchedCountryOptions);
     };
     fetchData();
   }, []);
@@ -98,8 +95,9 @@ const Register = () => {
           ? new Date(user.date_of_birth).toISOString().split("T")[0]
           : ""
       );
+      setLanguage(user.language);
     }
-  }, []);
+  }, [user]);
 
   return (
     <div className="contenedor register">
@@ -107,7 +105,7 @@ const Register = () => {
       <div className="register-container">
         <TitleWow
           title={t("register.title-server-sub-title")}
-          description={t("register.title-server-message")}
+          description={t("register.section-page.register.title-server-message")}
         />
         <form className="register-container-form" onSubmit={handleFormSubmit}>
           <div className="form-group select-container">
@@ -115,7 +113,7 @@ const Register = () => {
               htmlFor="countrySelect"
               className="mb-2 register-container-form-label"
             >
-              {t("register.input.select-country")}
+              {t("register.section-page.register.input.select-country")}
             </label>
             <Select
               instanceId={"wsad123wqwe"}
@@ -123,8 +121,11 @@ const Register = () => {
               options={countryOptions}
               onChange={handleCountryChange}
               value={countryOptions.find((option) => option.value === country)}
-              placeholder="Selecciona el país"
+              placeholder={t(
+                "register.section-page.register.input.select-country-place-holder"
+              )}
               isSearchable
+              inputId="countrySelect"
             />
           </div>
           <div className="form-group">
@@ -132,7 +133,7 @@ const Register = () => {
               htmlFor="fechaInput"
               className="mb-2 register-container-form-label"
             >
-              {t("register.input.select-birthday")}
+              {t("register.section-page.register.input.select-birthday")}
             </label>
             <input
               className="mb-3 px-4 py-2 border rounded-md text-black register-input"
@@ -148,7 +149,7 @@ const Register = () => {
             className="text-white px-5 py-5 rounded-md mt-8 button-register"
             type="submit"
           >
-            Continuar
+            {t("register.section-page.register.button.btn-primary")}
           </button>
         </form>
       </div>

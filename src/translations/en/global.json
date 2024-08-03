@@ -1,32 +1,101 @@
 {
-    "navbar": {
-        "language": "Select your language"
-    },
-    "register": {
-        "error": {
-            "country-empty": "Please select a valid country.",
-            "birth-date-empty": "Please enter a valid date of birth."
-        },
-        "title-server-sub-title": "Register in",
-        "title-server-message": "All the information you share with us at Wow Libre is like the special ingredient of your amazing experience! The more we know, the better we can make you experience something truly extraordinary. So, share that information with us and get ready for something out of this world!",
-        "input": {
-            "select-country": "Select a country",
-            "select-birthday": "Birthdate"
-        }
-    },
-    "login": {
-        "error": {
-            "empty-field-title": "incomplete form",
-            "empty-field-message": "Please complete all required fields to continue",
-            "empty-field-buttom-message": "Understood",
-            "authentication-message": "The data is invalid, please check your information"
-        },
-        "title": "Log in",
-        "username": "Enter your username",
-        "password": "Enter your password",
-        "buttom": "Log in",
-        "old-password": "¿Did you forget your password?",
-        "create-account-message": "Creat your account",
-        "create-account-question": "¿You do not have an account? "
-    }
+  "navbar": {
+      "language": "Select your language"
+  },
+  "register": {
+      "error": {
+          "country-empty": "Please select a valid country.",
+          "birth-date-empty": "Please enter a valid date of birth.",
+          "last-name-invalid": "Please make sure your last name is between 5 and 50 characters.",
+          "first-name-invalid": "Please make sure your first name is between 5 and 50 characters.",
+          "email-empty": "Please enter your email.",
+          "email-invalid": "Please enter a valid email.",
+          "phone-empty": "Please enter a contact number.",
+          "email-exist": "The entered email is already registered. Please enter another email.",
+          "terms-and-conditions-empty": "Please accept the terms and conditions.",
+          "password-web-no-matches": "Passwords do not match.",
+          "password-web-empty": "Password cannot be empty.",
+          "password-web-invalid-length": "Password must be longer than 5 characters and shorter than 30 characters."
+      },
+      "title-server-sub-title": "Register in",
+      "section-page": {
+          "register": {
+              "title-server-message": "All the information you share with us on Wow Libre is like the special ingredient for your amazing experience! The more we know, the better we can make your experience truly extraordinary. So, share those details with us and get ready for something out of this world!",
+              "input": {
+                  "select-country": "Select a country",
+                  "select-country-place-holder": "Select the country",
+                  "select-birthday": "Date of Birth"
+              },
+              "button": {
+                  "btn-primary": "Continue"
+              }
+          },
+          "kown-you": {
+              "title-server-message": "Your real name may be used in the future to verify your identity when you contact WowLibre. By default, your real name will remain hidden from other users.",
+              "input": {
+                  "select-lastname": "Enter your last names",
+                  "select-lastname-place-holder": "Enter your last names",
+                  "select-firstname": "Enter your first names",
+                  "select-firstname-place-holder": "Enter your first names"
+              },
+              "button": {
+                  "btn-primary": "Continue",
+                  "btn-secondary": "Back"
+              }
+          },
+          "contact-means": {
+              "title-server-message": "This is what you will use when logging into websites and mobile apps.",
+              "input": {
+                  "email-text": "Enter your email",
+                  "email-text-place-holder": "Enter a valid email",
+                  "phone-text": "Enter a phone number",
+                  "phone-text-place-holder": "Enter a contact phone."
+              },
+              "button": {
+                  "btn-primary": "Continue",
+                  "btn-secondary": "Back"
+              }
+          },
+          "terms-and-conditions": {
+              "title-server-message": "Welcome to Wow Libre! Accepting our options allows you to immerse yourself in a personalized experience full of exclusive offers, exciting news, and much more.",
+              "button": {
+                  "btn-primary": "Continue",
+                  "btn-secondary": "Back"
+              },
+              "input": {
+                  "email-check-text": "The account email will receive special offers, news, and more from Wow Libre",
+                  "term-check-text": "I have read and accept the following: Terms and Conditions",
+                  "term-check-link": "Terms and Conditions"
+              }
+          },
+          "account-web": {
+              "title-server-message": "Protect your account and choose a secure password for the administrative web.",
+              "input": {
+                  "password-web-text": "Web password",
+                  "password-web-placeholder": "Web password",
+                  "password-confirm-web-text": "Confirm Password",
+                  "password-confirm-web-text-placeholder": "Confirm Password"
+              },
+              "button": {
+                  "btn-primary": "Continue",
+                  "btn-secondary": "Back"
+              }
+          }
+      }
+  },
+  "login": {
+      "error": {
+          "empty-field-title": "Incomplete form",
+          "empty-field-message": "Please fill out all required fields to continue",
+          "empty-field-buttom-message": "Understood",
+          "authentication-message": "The data is invalid, please check your information"
+      },
+      "title": "Login",
+      "username": "Enter your username",
+      "password": "Enter your password",
+      "buttom": "Log in",
+      "old-password": "Forgot your password?",
+      "create-account-message": "Create your account",
+      "create-account-question": "Don't have an account?"
+  }
 }

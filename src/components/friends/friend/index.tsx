@@ -53,10 +53,10 @@ const Friend: React.FC<CharacterProps> = ({ character, token, account_id }) => {
   if (!friendsModel || friendsModel.friends.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center p-8">
-        <p className="text-white text-x2 font-semibold mb-2">
+        <p className="text-white text-3x1 font-semibold mb-2">
           ¡Oh no! No tienes amigos.
         </p>
-        <p className="text-white text-x1">
+        <p className="text-white text-xl">
           Parece que aún no has agregado amigos a tu lista. Conéctate con otros
           aventureros para comenzar a construir tu red social en el juego.
         </p>

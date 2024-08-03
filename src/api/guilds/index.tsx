@@ -52,18 +52,53 @@ export const getGuild = async (guildId: string): Promise<GuildData> => {
       }
     );
 
-    const responseData: GenericResponseDto<GuildData> = await response.json();
-
     if (response.ok && response.status === 200) {
+      const responseData: GenericResponseDto<GuildData> = await response.json();
+
       return responseData.data;
     } else {
-      const errorMessage = await response.text();
-      throw new Error(`Error [${response.status}]: ${errorMessage}`);
+      const errorGeneric: GenericResponseDto<void> = await response.json();
+
+      throw new Error(
+        `${errorGeneric.message} - Transaction Id: ${transactionId}`
+      );
     }
   } catch (error: any) {
-    console.error(`Error: ${error.message}`, error);
     throw new Error(
       `It was not possible to obtain the guilds: ${error.message}`
     );
+  }
+};
+
+export const attach = async (
+  guildId: string,
+  accountId: string,
+  characterId: string,
+  token: string
+): Promise<void> => {
+  try {
+    const transactionId = uuidv4();
+
+    const response = await fetch(
+      `${BASE_URL_CHARACTER}/api/guilds/${guildId}/attach?account_id=${accountId}&character_id=${characterId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          transaction_id: transactionId,
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+
+    if (response.ok && response.status === 204) {
+      return;
+    } else {
+      const responseData: GenericResponseDto<void> = await response.json();
+      throw new Error(`${responseData.message}`);
+    }
+  } catch (error: any) {
+    console.error(`Error: ${error.message}`, error);
+    throw new Error(` ${error.message}`);
   }
 };

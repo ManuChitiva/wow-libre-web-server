@@ -8,13 +8,16 @@ import React, { ChangeEvent, useState } from "react";
 import Swal from "sweetalert2";
 import "../style.css";
 import NavbarMinimalist from "@/components/navbar-minimalist";
-
-const crypto = require("crypto");
+import useAuth from "@/hook/useAuth";
 
 const AccountIngame = () => {
-  const { user, setUser, clearUserData } = useUserContext(); // Obteniendo el contexto y funciones del contexto
+  const { user, setUser } = useUserContext();
   const [userName, setUsername] = useState("");
   const router = useRouter();
+
+  useAuth(
+    "Tu sesión ha expirado. Por favor, vuelve a autenticarte para continuar."
+  );
 
   const handleUserNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);

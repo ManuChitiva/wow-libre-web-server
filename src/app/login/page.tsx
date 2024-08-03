@@ -14,7 +14,6 @@ import LoadingSpinner from "@/components/loading-spinner";
 const Login = () => {
   const { t, i18n } = useTranslation();
   const jwt = Cookies.get("token");
-
   const { user, setUser } = useUserContext();
   const [userName, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -95,10 +94,7 @@ const Login = () => {
   return (
     <div className="login-page">
       <div className="login-banner">
-        <img
-          src="https://blz-contentstack-images.akamaized.net/v3/assets/bltf408a0557f4e4998/bltbe1582ef1691da64/653ad22f23ad6fdfc530381c/WoW_11.0_PreSaleSupportAssets_Bnet_CheckoutThumbnail_960x540_B06.png?imwidth=1920&imdensity=2.625"
-          alt="Img Login Wow"
-        />
+        <img src="/img/login/login-banner.png" alt="Img Login Wow" />
       </div>
       <div className="login-form">
         <div className="login-form-btn-back text-xl md:text-4xl lg:text-5xl xl:text-5xl">
@@ -111,15 +107,15 @@ const Login = () => {
         </div>
         <div className="login-form-section-register">
           <form onSubmit={handleFormSubmit}>
-            <label htmlFor="username" className="mb-2">
-              {t("login.username")}
+            <label htmlFor="email" className="mb-2">
+              {t("login.email")}
             </label>
             <input
               className="mb-4 px-4 py-2 border rounded-md text-black"
-              type="text"
-              id="username"
-              placeholder="Username"
-              autoComplete="username"
+              type="email"
+              id="email"
+              placeholder="Email"
+              autoComplete="email"
               onChange={handleUserNameChange}
             />
             <label htmlFor="password" className="mb-2">
@@ -154,7 +150,7 @@ const Login = () => {
             </p>
 
             <p>
-              <a className=" hover:text-orange-300" href="#">
+              <a className=" hover:text-orange-600" href="#">
                 {t("login.old-password")}
               </a>
             </p>

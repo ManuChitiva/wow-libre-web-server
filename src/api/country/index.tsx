@@ -3,6 +3,11 @@ import { GenericResponseDto } from "@/dto/generic";
 import { CountryModel } from "@/model/model";
 import { v4 as uuidv4 } from "uuid";
 
+const defaultCountryOptions: CountryModel[] = [
+  { value: "Otro", label: "Otro", language: "es" },
+  { value: "Others", label: "Others", language: "en" },
+];
+
 export const getAvailableCountries = async (): Promise<CountryModel[]> => {
   try {
     const transactionId = uuidv4(); // Genera un transaction-id único
@@ -20,14 +25,9 @@ export const getAvailableCountries = async (): Promise<CountryModel[]> => {
 
     if (response.ok && response.status === 200) {
       return responseData.data;
-    } else {
-      const errorMessage = await response.text();
-      throw new Error(`Error [${response.status}]: ${errorMessage}`);
     }
+    return defaultCountryOptions;
   } catch (error: any) {
-    console.error(`Error: ${error.message}`, error);
-    throw new Error(
-      `It was not possible to obtain the available countries: ${error.message}`
-    );
+    return defaultCountryOptions;
   }
 };

@@ -34,8 +34,6 @@ export const login = async (
     }
   } catch (error: any) {
     console.error(`Error: ${error.message}`, error);
-    throw new Error(
-      `It was not possible to obtain the available countries: ${error.message}`
-    );
+    throw new Error(`Services are not available: ${error.message}`);
   }
 };

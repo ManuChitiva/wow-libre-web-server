@@ -11,11 +11,13 @@ export const registerAccountGame = async (
   userData: AccountGameRequestDto,
   jwt: string
 ): Promise<void> => {
+  const transactionId = uuidv4();
+
   const response = await fetch(`${BASE_URL_AUTH}/api/account/games/create`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      transaction_id: uuidv4(),
+      transaction_id: transactionId,
       Authorization: "Bearer " + jwt,
     },
     body: JSON.stringify(userData),
@@ -28,9 +30,9 @@ export const registerAccountGame = async (
     const badRequestError: GenericResponseDto<void> = responseData;
     throw new Error(`Error: ${badRequestError.message}`);
   } else {
-    const errorMessage = await response.text();
+    const errorGeneric: GenericResponseDto<void> = await response.json();
     throw new Error(
-      `An error occurred while trying to register data: ${errorMessage}`
+      `${errorGeneric.message} - TransactionId: ${transactionId}`
     );
   }
 };
@@ -38,11 +40,13 @@ export const registerAccountGame = async (
 export const registerAccountWeb = async (
   userData: AccountWebRequestDto
 ): Promise<LoginData> => {
+  const transactionId = uuidv4();
+
   const response = await fetch(`${BASE_URL_AUTH}/api/account/web/create`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      transaction_id: uuidv4(),
+      transaction_id: transactionId,
     },
     body: JSON.stringify(userData),
   });
@@ -53,12 +57,12 @@ export const registerAccountWeb = async (
   } else if (response.status == 400) {
     const badRequestError: GenericResponseDto<BadRequestDto> = responseData;
     throw new Error(
-      `An error occurred while trying to register data ${badRequestError.message}`
+      `${badRequestError.message} - TransactionId: ${transactionId}`
     );
   } else {
-    const errorMessage = await response.text();
+    const errorGeneric: GenericResponseDto<void> = await response.json();
     throw new Error(
-      `An error occurred while trying to register data ${errorMessage}`
+      `${errorGeneric.message} - TransactionId: ${transactionId}`
     );
   }
 };

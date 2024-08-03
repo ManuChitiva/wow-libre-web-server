@@ -1,0 +1,101 @@
+{
+  "navbar": {
+      "language": "Selecione seu idioma"
+  },
+  "register": {
+      "error": {
+          "country-empty": "Por favor, selecione um país válido.",
+          "birth-date-empty": "Por favor, insira uma data de nascimento válida.",
+          "last-name-invalid": "Por favor, certifique-se de que seu sobrenome tenha entre 5 e 50 caracteres.",
+          "first-name-invalid": "Por favor, certifique-se de que seu nome tenha entre 5 e 50 caracteres.",
+          "email-empty": "Por favor, insira seu e-mail.",
+          "email-invalid": "Por favor, insira um e-mail válido.",
+          "phone-empty": "Por favor, insira um número de contato.",
+          "email-exist": "O e-mail inserido já está registrado. Por favor, insira outro e-mail.",
+          "terms-and-conditions-empty": "Por favor, aceite os termos e condições.",
+          "password-web-no-matches": "As senhas não coincidem.",
+          "password-web-empty": "A senha não pode estar vazia.",
+          "password-web-invalid-length": "A senha deve ter mais de 5 caracteres e menos de 30 caracteres."
+      },
+      "title-server-sub-title": "Registrar em",
+      "section-page": {
+          "register": {
+              "title-server-message": "Todas as informações que você compartilha conosco no Wow Libre são como o ingrediente especial para sua experiência incrível! Quanto mais soubermos, melhor podemos tornar sua experiência verdadeiramente extraordinária. Então, compartilhe esses detalhes conosco e prepare-se para algo fora deste mundo!",
+              "input": {
+                  "select-country": "Selecione um país",
+                  "select-country-place-holder": "Selecione o país",
+                  "select-birthday": "Data de Nascimento"
+              },
+              "button": {
+                  "btn-primary": "Continuar"
+              }
+          },
+          "kown-you": {
+              "title-server-message": "Seu nome real pode ser usado no futuro para verificar sua identidade quando você entrar em contato com o WowLibre. Por padrão, seu nome real permanecerá oculto para outros usuários.",
+              "input": {
+                  "select-lastname": "Insira seus sobrenomes",
+                  "select-lastname-place-holder": "Insira seus sobrenomes",
+                  "select-firstname": "Insira seus nomes",
+                  "select-firstname-place-holder": "Insira seus nomes"
+              },
+              "button": {
+                  "btn-primary": "Continuar",
+                  "btn-secondary": "Voltar"
+              }
+          },
+          "contact-means": {
+              "title-server-message": "Isso é o que você usará ao fazer login em sites e aplicativos móveis.",
+              "input": {
+                  "email-text": "Insira seu e-mail",
+                  "email-text-place-holder": "Insira um e-mail válido",
+                  "phone-text": "Insira um número de telefone",
+                  "phone-text-place-holder": "Insira um telefone de contato."
+              },
+              "button": {
+                  "btn-primary": "Continuar",
+                  "btn-secondary": "Voltar"
+              }
+          },
+          "terms-and-conditions": {
+              "title-server-message": "Bem-vindo ao Wow Libre! Aceitar nossas opções permite que você se envolva em uma experiência personalizada cheia de ofertas exclusivas, notícias empolgantes e muito mais.",
+              "button": {
+                  "btn-primary": "Continuar",
+                  "btn-secondary": "Voltar"
+              },
+              "input": {
+                  "email-check-text": "O e-mail da conta receberá ofertas especiais, notícias e mais do Wow Libre",
+                  "term-check-text": "Eu li e aceito o seguinte: Termos e condições",
+                  "term-check-link": "Termos e condições"
+              }
+          },
+          "account-web": {
+              "title-server-message": "Proteja sua conta e escolha uma senha segura para a web administrativa.",
+              "input": {
+                  "password-web-text": "Senha para a web",
+                  "password-web-placeholder": "Senha para a web",
+                  "password-confirm-web-text": "Confirmar Senha",
+                  "password-confirm-web-text-placeholder": "Confirmar Senha"
+              },
+              "button": {
+                  "btn-primary": "Continuar",
+                  "btn-secondary": "Voltar"
+              }
+          }
+      }
+  },
+  "login": {
+      "error": {
+          "empty-field-title": "Formulário incompleto",
+          "empty-field-message": "Por favor, preencha todos os campos obrigatórios para continuar",
+          "empty-field-buttom-message": "Entendido",
+          "authentication-message": "Os dados são inválidos, por favor, verifique suas informações"
+      },
+      "title": "Entrar",
+      "username": "Insira seu nome de usuário",
+      "password": "Insira sua senha",
+      "buttom": "Entrar",
+      "old-password": "Esqueceu sua senha?",
+      "create-account-message": "Crie sua conta",
+      "create-account-question": "Não tem uma conta?"
+  }
+}

@@ -10,8 +10,8 @@ const config: Config = {
   theme: {  
     extend: {
     colors: {
-      // Agrega tu color personalizado aquí
-      midnight: '#0B1218', 
+      midnight: '#0B1218',
+      orange_500: '#f97316', 
       btnPrimary: '#FF4E16'
     },
       backgroundImage: {

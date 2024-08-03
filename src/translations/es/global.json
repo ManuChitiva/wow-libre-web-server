@@ -5,13 +5,82 @@
     "register": {
         "error": {
             "country-empty": "Por favor, selecciona un país válido.",
-            "birth-date-empty": "Por favor, ingresa una fecha de nacimiento válida."
+            "birth-date-empty": "Por favor, ingresa una fecha de nacimiento válida.",
+            "last-name-invalid": "Por favor, asegúrate de que tu apellido tenga entre 5 y 50 caracteres.",
+            "first-name-invalid": "Por favor, asegúrate de que tu nombre tenga entre 5 y 50 caracteres.",
+            "email-empty": "Por favor, ingrese su correo electrónico.",
+            "email-invalid": "Por favor, ingrese un correo electrónico válido.",
+            "phone-empty": "Por favor, ingrese un numero de contacto.",
+            "email-exist": "El correo electrónico ingresado ya está registrado. Por favor, ingrese otro correo electrónico.",
+            "terms-and-conditions-empty": "Por favor, acepta los terminos y condiciones.",
+            "password-web-no-matches": "Las contraseñas no coinciden",
+            "password-web-empty": "La contraseña no puede estar  vacía.",
+            "password-web-invalid-length": "La contraseña debe ser superior a 5 caracteres e inferior a 30 caracteres."
         },
         "title-server-sub-title": "Registrarme en",
-        "title-server-message": "¡Toda la información que nos compartas en Wow Libre es como el ingrediente especial de tu experiencia alucinante! Cuanto más sepamos, mejor podremos hacerte vivir algo realmente extraordinario. Así que, ¡compártenos esos datos y prepárate para algo fuera de serie!",
-        "input": {
-            "select-country": "Seleccione un pais",
-            "select-birthday": "Fecha de Nacimiento"
+        "section-page": {
+            "register": {
+                "title-server-message": "¡Toda la información que nos compartas en Wow Libre es como el ingrediente especial de tu experiencia alucinante! Cuanto más sepamos, mejor podremos hacerte vivir algo realmente extraordinario. Así que, ¡compártenos esos datos y prepárate para algo fuera de serie!",
+                "input": {
+                    "select-country": "Seleccione un pais",
+                    "select-country-place-holder": "Seleccione el pais",
+                    "select-birthday": "Fecha de Nacimiento"
+                },
+                "button": {
+                    "btn-primary": "Continuar"
+                }
+            },
+            "kown-you": {
+                "title-server-message": "Es posible que se utilice tu nombre real en el futuro para verificar tu identidad cuando te pongas en contacto con WowLibre. Por defecto, tu nombre real permanecerá oculto para otros usuarios.",
+                "input": {
+                    "select-lastname": "Ingrese sus apellidos",
+                    "select-lastname-place-holder": "Ingrese sus apellidos",
+                    "select-firstname": "Ingrese sus nombres",
+                    "select-firstname-place-holder": "Ingrese sus nombres"
+                },
+                "button": {
+                    "btn-primary": "Continuar",
+                    "btn-secondary": "Volver"
+                }
+            },
+            "contact-means": {
+                "title-server-message": "Esto es lo que utilizarás cuando inicies sesión en los sitios web y aplicaciones móviles.",
+                "input": {
+                    "email-text": "Ingrese su correo electronico",
+                    "email-text-place-holder": "Ingrese un correo valido",
+                    "phone-text": "Ingrese un número de teléfono",
+                    "phone-text-place-holder": "Ingrese un telefono de contacto."
+                },
+                "button": {
+                    "btn-primary": "Continuar",
+                    "btn-secondary": "Volver"
+                }
+            },
+            "terms-and-conditions": {
+                "title-server-message": "¡Bienvenido a Wow Libre! Aceptar nuestras opciones te permite sumergirte en una experiencia personalizada llena de ofertas exclusivas,  noticias emocionantes y mucho más.",
+                "button": {
+                    "btn-primary": "Continuar",
+                    "btn-secondary": "Volver"
+                },
+                "input": {
+                    "email-check-text": "El correo de la cuenta recibirá ofertas especiales, noticias y demás de Wow Libre",
+                    "term-check-text": "He leído y acepto lo siguiente: Términos y condiciones ",
+                    "term-check-link": "Términos y condiciones"
+                }
+            },
+            "account-web": {
+                "title-server-message": "Protege tu cuenta y elige una contraseña segura para la web administrativa.",
+                "input": {
+                    "password-web-text": "Contraseña para la web",
+                    "password-web-placeholder": "Contraseña para la web",
+                    "password-confirm-web-text": "Confirmar Contraseña",
+                    "password-confirm-web-text-placeholder": "Confirmar Contraseña"
+                },
+                "button": {
+                    "btn-primary": "Continuar",
+                    "btn-secondary": "Volver"
+                }
+            }
         }
     },
     "login": {

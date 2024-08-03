@@ -9,8 +9,13 @@ import Swal from "sweetalert2";
 import "../style.css";
 import { useTranslation } from "react-i18next";
 
+const MAX_NAME_LENGTH = 50;
+const MIN_NAME_LENGTH = 5;
+const MIN_FIRST_NAME_LENGTH = 5;
+const MAX_FIRST_NAME_LENGTH = 50;
+
 const KnowYou = () => {
-  const { user, setUser } = useUserContext(); // Obteniendo el contexto y funciones del contexto
+  const { user, setUser } = useUserContext();
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
   const router = useRouter();
@@ -31,16 +36,16 @@ const KnowYou = () => {
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // Validaciones
-    if (
+    const isValidLastName =
       !lastName.trim() ||
-      lastName.trim().length < 5 ||
-      lastName.trim().length > 50
-    ) {
+      lastName.trim().length < MIN_NAME_LENGTH ||
+      lastName.trim().length > MAX_NAME_LENGTH;
+
+    if (isValidLastName) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Por favor, ingrese sus nombres validos.",
+        text: t("register.error.last-name-invalid"),
         color: "white",
         background: "#0B1218",
         timer: 43500,
@@ -50,13 +55,13 @@ const KnowYou = () => {
 
     if (
       !firstName.trim() ||
-      firstName.trim().length < 5 ||
-      firstName.trim().length > 50
+      firstName.trim().length < MIN_FIRST_NAME_LENGTH ||
+      firstName.trim().length > MAX_FIRST_NAME_LENGTH
     ) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Por favor, ingrese sus apellidos validos.",
+        text: t("register.error.first-name-invalid"),
         color: "white",
         background: "#0B1218",
         timer: 43500,
@@ -64,7 +69,6 @@ const KnowYou = () => {
       return;
     }
 
-    // Actualizar los datos del usuario en el contexto
     if (user) {
       setUser({
         ...user,
@@ -77,10 +81,11 @@ const KnowYou = () => {
 
   useEffect(() => {
     if (user) {
-      setLastName(user.last_name || "");
-      setFirstName(user.first_name || "");
+      setLastName(user.last_name);
+      setFirstName(user.first_name);
     }
   }, [setUser]);
+
   return (
     <div className="contenedor register">
       <NavbarMinimalist />
@@ -88,9 +93,7 @@ const KnowYou = () => {
       <div className="register-container">
         <TitleWow
           title={t("register.title-server-sub-title")}
-          description="Es posible que se utilice tu nombre real en el 
-      futuro para verificar tu identidad cuando te pongas en contacto con WowLibre. 
-      Por defecto, tu nombre real permanecerá oculto para otros usuarios."
+          description={t("register.section-page.kown-you.title-server-message")}
         />
 
         <form
@@ -99,34 +102,40 @@ const KnowYou = () => {
         >
           <div className="form-group">
             <label
-              htmlFor="countrySelect"
+              htmlFor="firstName"
               className="mb-2 register-container-form-label"
             >
-              Ingrese su nombre{" "}
+              {t("register.section-page.kown-you.input.select-firstname")}
             </label>
-
             <input
               className="mb-3 px-4 py-2 border rounded-md text-black register-input"
               type="text"
-              placeholder="Ingrese sus nombres"
-              value={lastName}
-              onChange={handleLastNameChange}
+              placeholder={t(
+                "register.section-page.kown-you.input.select-firstname-place-holder"
+              )}
+              value={firstName}
+              id="firstName"
+              onChange={handleFirstNameChange}
             />
           </div>
 
           <div className="form-group">
             <label
-              htmlFor="firstNameInput"
+              htmlFor="lastName"
               className="mb-2 register-container-form-label"
             >
-              Ingrese sus apellidos
+              {t("register.section-page.kown-you.input.select-lastname")}
             </label>
+
             <input
               className="mb-3 px-4 py-2 border rounded-md text-black register-input"
               type="text"
-              placeholder="Ingrese sus apellidos"
-              value={firstName}
-              onChange={handleFirstNameChange}
+              placeholder={t(
+                "register.section-page.kown-you.input.select-lastname-place-holder"
+              )}
+              value={lastName}
+              onChange={handleLastNameChange}
+              id="lastName"
             />
           </div>
 
@@ -135,14 +144,14 @@ const KnowYou = () => {
             className=" text-white px-5 py-5 rounded-md mt-8 button-register"
             type="submit"
           >
-            Continuar
+            {t("register.section-page.kown-you.button.btn-primary")}
           </button>
           <button
             className="text-white px-5 py-5 rounded-md mt-8 button-register"
-            type="button" // Asegúrate de cambiar el tipo a "button"
-            onClick={handleVolverClick} // Agrega el evento onClick
+            type="button"
+            onClick={handleVolverClick}
           >
-            Volver
+            {t("register.section-page.kown-you.button.btn-secondary")}
           </button>
         </form>
       </div>

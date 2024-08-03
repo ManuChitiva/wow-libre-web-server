@@ -11,16 +11,19 @@ import "../style.css";
 import { registerAccountWeb } from "@/api/account/register";
 import { AccountWebRequestDto } from "@/model/model";
 import Cookies from "js-cookie";
+import { useTranslation } from "react-i18next";
+import LoadingSpinner from "@/components/loading-spinner";
 
 const AccountWeb = () => {
-  const { user, setUser, clearUserData } = useUserContext();
+  const { user, setUser } = useUserContext();
   const language = user.language;
   const country = user.country;
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const router = useRouter();
-  const [avatar, setAvatar] = useState("");
+  const { t } = useTranslation();
 
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
@@ -39,7 +42,7 @@ const AccountWeb = () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Las contraseñas no coinciden",
+        text: t("register.error.password-web-no-matches"),
         color: "white",
         background: "#0B1218",
         timer: 43500,
@@ -51,7 +54,7 @@ const AccountWeb = () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "La contraseña está vacía.",
+        text: t("register.error.password-web-empty"),
         color: "white",
         background: "#0B1218",
         timer: 43500,
@@ -63,13 +66,14 @@ const AccountWeb = () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "La contraseña debe ser superior a 5 caracteres e inferior a 30 caracteres.",
+        text: t("register.error.password-web-empty"),
         color: "white",
         background: "#0B1218",
         timer: 43500,
       });
       return;
     }
+    setIsSubmitting(true);
 
     try {
       const userDateOfBirth = user.date_of_birth;
@@ -119,15 +123,17 @@ const AccountWeb = () => {
         secure: true,
         sameSite: "Strict",
       });
-    } catch (error) {
+    } catch (error: any) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Ha ocurrido un error inesperado al intentar continuar con el registro. Por favor, inténtelo de nuevo más tarde o comuníquese con el soporte técnico.",
+        text: `${error.message}`,
         background: "#0B1218",
         timer: 4500,
       });
       return;
+    } finally {
+      setIsSubmitting(false);
     }
 
     router.push(
@@ -145,26 +151,50 @@ const AccountWeb = () => {
 
       <div className="register-container">
         <TitleWow
-          title=" Registrarme en "
-          description="Protege tu cuenta y elige una contraseña segura para la web administrativa."
+          title={t("register.title-server-sub-title")}
+          description={t(
+            "register.section-page.account-web.title-server-message"
+          )}
         />
         <form
           className="register-container-form pt-5"
           onSubmit={handleFormSubmit}
         >
-          <div className="form-group">
+          <div className="hidden">
             <label
-              htmlFor="countrySelect"
+              htmlFor="usernameInput"
               className="mb-2 register-container-form-label"
             >
-              Contraseña para la web
+              Username
+            </label>
+            <input
+              className="mb-3 px-4 py-2 border rounded-md text-black register-input"
+              type="text"
+              id="usernameInput"
+              placeholder="Username"
+              value={user.username}
+              readOnly
+              autoComplete="username"
+            />
+          </div>
+
+          <div className="form-group">
+            <label
+              htmlFor="passInput"
+              className="mb-2 register-container-form-label"
+            >
+              {t("register.section-page.account-web.input.password-web-text")}
             </label>
 
             <input
               className="mb-3 px-4 py-2 border rounded-md text-black register-input"
               type="password"
-              placeholder="Ingrese su contraseña"
+              id="passInput"
+              placeholder={t(
+                "register.section-page.account-web.input.password-web-placeholder"
+              )}
               value={password}
+              required
               autoComplete="new-password"
               onChange={handlePasswordChange}
             />
@@ -172,34 +202,43 @@ const AccountWeb = () => {
 
           <div className="form-group">
             <label
-              htmlFor="firstNameInput"
+              htmlFor="confirmPassInput"
               className="mb-2 register-container-form-label"
             >
-              Confirmar Contraseña
+              {t(
+                "register.section-page.account-web.input.password-confirm-web-text"
+              )}
             </label>
             <input
               className="mb-3 px-4 py-2 border rounded-md text-black register-input"
               type="password"
+              id="confirmPassInput"
               autoComplete="new-password"
-              placeholder="Ingrese nuevamente su contraseña"
+              placeholder={t(
+                "register.section-page.account-web.input.password-confirm-web-text-placeholder"
+              )}
               value={confirmPassword}
               onChange={handleConfirmPasswordChange}
             />
           </div>
-
+          {isSubmitting && (
+            <div className="mb-4 text-center">
+              <LoadingSpinner />
+            </div>
+          )}
           <PageCounter currentSection={5} totalSections={5} />
           <button
             className=" text-white px-5 py-5 rounded-md mt-8 button-register"
             type="submit"
           >
-            Confirmar
+            {t("register.section-page.account-web.button.btn-primary")}
           </button>
           <button
             className="text-white px-5 py-5 rounded-md mt-8 button-register"
             type="button"
             onClick={handleVolverClick}
           >
-            Volver
+            {t("register.section-page.account-web.button.btn-secondary")}
           </button>
         </form>
       </div>
