@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# World of Warcraft Community Web Server 
 
-## Getting Started
 
-First, run the development server:
+Bienvenido a World of Warcraft Community Web Server, una aplicación web diseñada para transformar la experiencia de los jugadores de World of Warcraft. Este sitio web no es solo  sitio web más; está diseñado para ofrecer una variedad de funcionalidades que van más allá de las compras y el registro, haciendo que sea un recurso valioso y atractivo para la comunidad.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Características Principales
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Registro al emulador "Trinity Core" & "Azeroth Core" : Actualmente permite crear cuentas de juego 
+- Marketplace Dinámico: Compra y vende artículos del juego de manera segura y eficiente.
+- Gestión de Hermandades: Crea, administra y promociona tu hermandad. Conecta con otros jugadores.
+- Perfil Personalizado: Personaliza tu perfil con tus personajes, logros y estadísticas del juego.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Tecnologías Utilizadas
 
-## Learn More
+Frontend: React, Next.js, Tailwind CSS
+Backend: Spring Boot, MySQL
+Autenticación: Cookies para la autenticación de usuarios
+API: Integración con servicios Rest y manejo de peticiones API para detalles de cuenta y personajes
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contribución
+Estamos abiertos a contribuciones de la comunidad. Si tienes ideas, sugerencias o deseas colaborar, por favor, abre un issue o envía un pull request. ¡Tu participación es bienvenida!
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
