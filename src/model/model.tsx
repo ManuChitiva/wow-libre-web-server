@@ -202,6 +202,7 @@ interface Benefit {
 }
 
 export interface Profession {
+  id: number;
   logo: string;
   name: string;
   value: number;

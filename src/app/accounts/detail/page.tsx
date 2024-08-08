@@ -37,7 +37,7 @@ const AccountDetail = () => {
   const searchParams = useSearchParams();
 
   const token = Cookies.get("token");
-  const accountId = searchParams.get("id");
+  const accountId = Number(searchParams.get("id"));
   const { user, clearUserData } = useUserContext();
   const router = useRouter();
 

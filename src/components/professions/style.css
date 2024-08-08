@@ -1,3 +1,4 @@
+/* Estilos generales para las flechas */
 .custom-arrow {
   position: absolute;
   top: 50%;
@@ -8,14 +9,15 @@
   padding: 10px;
   cursor: pointer;
   z-index: 10;
+  border-radius: 50%; /* Añade bordes redondeados para un diseño más moderno */
 }
 
 .custom-arrow-left {
-  left: 1px; /* Ajusta la distancia desde el borde izquierdo */
+  left: 10px; /* Ajusta la distancia desde el borde izquierdo en móviles */
 }
 
 .custom-arrow-right {
-  right: 150px; /* Ajusta la distancia desde el borde derecho */
+  right: 130px; /* Ajusta la distancia desde el borde derecho en móviles */
 }
 
 .custom-arrow:hover {
@@ -25,32 +27,27 @@
 /* Contenedor del carrusel */
 .professions-carousel-container {
   position: relative;
-}
-
-.carousel-container {
-  position: relative;
+  padding: 2rem 10px; /* Añade padding para evitar que el contenido quede pegado a los bordes */
 }
 
 /* Otros estilos */
 .carousel-slide {
   flex: 0 0 auto;
-  width: 120%;
-  padding-top: 2rem;
+  width: 100%;
+  padding-top: 1rem; /* Ajusta el espacio en la parte superior si es necesario */
   scroll-snap-align: start;
-  margin-right: 20px; /* Espacio entre cada slide */
+  margin-right: 0; /* Elimina el margen derecho en dispositivos móviles */
+  display: flex; /* Flexbox para centrar el contenido */
+  justify-content: center; /* Centra horizontalmente */
 }
 
 .carousel-slide img {
-  width: 80%;
-  height: auto;
+  max-width: 100%; /* Asegura que la imagen no exceda el ancho del contenedor */
+  height: auto; /* Mantiene la proporción de la imagen */
   border-radius: 8px;
+  object-fit: cover; /* Asegura que la imagen se ajuste bien en su contenedor */
 }
 
-@media (min-width: 768px) {
-  .carousel-slide {
-    width: 100%;
-  }
-}
 .select-none {
   user-select: none;
 }

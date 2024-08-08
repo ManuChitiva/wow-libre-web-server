@@ -1,14 +1,17 @@
-import { Character, Profession } from "@/model/model";
 import React, { MouseEventHandler, useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import "./style.css";
 import { getProfessions } from "@/api/professions";
+import ProfesionService from "./service";
+import { Character, Profession } from "@/model/model";
+import Swal from "sweetalert2";
+import Announcement from "./annoucement";
 
 interface ProfessionsProps {
   character: Character;
   token: string;
-  account_id: string;
+  account_id: number;
 }
 interface ArrowProps {
   onClick?: MouseEventHandler<HTMLButtonElement>;
@@ -19,7 +22,41 @@ const Professions: React.FC<ProfessionsProps> = ({
   account_id,
 }) => {
   const [professions, setPartners] = useState<Profession[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProfession, setSelectedProfession] =
+    useState<Profession | null>(null);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
+  const openModal = (profession: Profession) => {
+    setSelectedProfession(profession);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedProfession(null);
+  };
+  const handleAnnounce = (profession: Profession) => {
+    setSelectedProfession(profession);
+    setShowConfirmDialog(true);
+  };
+
+  const handleConfirmAnnounce = () => {
+    Swal.fire({
+      icon: "info",
+      color: "white",
+      background: "#0B1218",
+      title: "¡Mensaje Enviado!",
+      text: "Su mensaje será publicado en breve.",
+      confirmButtonText: "Aceptar",
+    }).then(() => {
+      setShowConfirmDialog(false);
+    });
+  };
+
+  const handleCancelAnnounce = () => {
+    setShowConfirmDialog(false);
+  };
   useEffect(() => {
     const fetchProfessions = async () => {
       try {
@@ -70,6 +107,21 @@ const Professions: React.FC<ProfessionsProps> = ({
 
   return (
     <div className="professions-carousel-container">
+      <div className="info-section mb-8 p-4 rounded-lg">
+        <p className="text-gray-300 text-lg mb-4">
+          <strong>¿Qué hacen los botones?</strong>
+        </p>
+        <p className="text-gray-300 text-lg mb-2">
+          <strong>Publicar:</strong> Al hacer clic en este botón, podrás
+          <strong> publicar tu profesión en la web.</strong> Esto permitirá que
+          otros jugadores vean y conozcan tus habilidades y servicios.
+        </p>
+        <p className="text-gray-300 text-lg">
+          <strong>Anunciarme:</strong> Al hacer clic en este botón, se enviará
+          un mensaje dentro del servidor. Esto es útil para alertar a otros
+          jugadores sobre tus habilidades o servicios en el juego.
+        </p>
+      </div>
       <Carousel
         responsive={responsive}
         swipeable={true}
@@ -86,25 +138,26 @@ const Professions: React.FC<ProfessionsProps> = ({
         customRightArrow={<CustomRightArrow />}
       >
         {professions.map((profession) => (
-          <div
-            key={profession.name}
-            className="carousel-slide select-none cursor-pointer"
-          >
-            <div className="mt-5 shadow-md p-10 rounded-lg">
+          <div key={profession.name} className="carousel-slide select-none ">
+            <div className=" shadow-md p-10 rounded-lg">
               <div className="flex flex-col md:flex-row">
                 <div className="md:w-1/2 md:mr-6">
-                  <div className="md:w-1/2 md:mr-6">
-                    <div className="w-80 h-80 flex justify-center items-center overflow-hidden rounded-full bg-gray-800">
-                      <img
-                        src={profession.logo}
-                        alt={profession.name}
-                        draggable="false"
-                        className="w-full h-full object-cover "
-                      />
-                    </div>
+                  <div className="w-64 h-64 flex justify-center items-center overflow-hidden rounded-full bg-gray-500">
+                    <img
+                      src={profession.logo}
+                      alt={profession.name}
+                      draggable="false"
+                      className="w-full h-full object-cover"
+                      style={{
+                        borderRadius: "50%",
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                    />
                   </div>
                 </div>
-                <div className="md:w-1/2">
+                <div className="md:w-1/2 ml-4">
                   <p className="text-gray-300 text-lg font-bold mb-2">
                     {profession.name}
                   </p>
@@ -130,21 +183,29 @@ const Professions: React.FC<ProfessionsProps> = ({
                     ))}
                   </div>
                   <div className="flex flex-col">
+                    <p className="text-gray-300 text-lg mb-4">
+                      Administrar servicios
+                    </p>
                     {profession.service == null ? (
-                      <button className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 focus:outline-none mr-20">
-                        Publico
+                      <button
+                        className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 focus:outline-none mb-2 md:mb-0"
+                        onClick={() => openModal(profession)}
+                      >
+                        Publicar
                       </button>
-                    ) : profession.service.is_public ? (
-                      <button className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 focus:outline-none mr-20">
-                        Publico
+                    ) : (
+                      <button
+                        onClick={() => openModal(profession)}
+                        className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none"
+                      >
+                        Editar
                       </button>
-                    ) : !profession.service.is_public ? (
-                      <button className="bg-red-700 text-white px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none mr-20">
-                        Privado
-                      </button>
-                    ) : null}
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none mt-2 mr-20">
-                      Editar
+                    )}{" "}
+                    <button
+                      onClick={() => handleAnnounce(profession)}
+                      className="bg-violet-700 text-white px-4 py-2 rounded-lg hover:bg-violet-800 mt-3 focus:outline-none"
+                    >
+                      Anunciarme
                     </button>
                   </div>
                 </div>
@@ -153,6 +214,32 @@ const Professions: React.FC<ProfessionsProps> = ({
           </div>
         ))}
       </Carousel>
+      {showConfirmDialog && selectedProfession && (
+        <Announcement
+          cost={1000}
+          characterId={character.id}
+          skillId={selectedProfession.id}
+          accountId={account_id}
+          token={token}
+          onConfirm={handleConfirmAnnounce}
+          onCancel={handleCancelAnnounce}
+        />
+      )}
+      {selectedProfession && (
+        <ProfesionService
+          isOpen={isModalOpen}
+          is_public={
+            selectedProfession.service != null &&
+            selectedProfession.service.is_public
+          }
+          exist_services={selectedProfession.service != null}
+          token={token}
+          character_id={character.id}
+          skill_id={selectedProfession.id}
+          account_id={account_id}
+          onClose={closeModal}
+        />
+      )}
     </div>
   );
 };

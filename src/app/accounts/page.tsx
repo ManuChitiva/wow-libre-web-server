@@ -24,7 +24,7 @@ const Page = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [dropdownVisible, setDropdownVisible] = useState<boolean>(false);
-  useAuth();
+  useAuth("Session expirada");
 
   useEffect(() => {
     if (!token) {

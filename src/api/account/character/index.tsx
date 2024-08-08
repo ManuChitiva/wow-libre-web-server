@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export const getCharacters = async (
   jwt: string,
-  accountId: string
+  accountId: number
 ): Promise<Characters> => {
   try {
     const response = await fetch(

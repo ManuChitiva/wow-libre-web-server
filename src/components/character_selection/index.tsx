@@ -34,6 +34,11 @@ const CharacterSelection: React.FC<CharacterSelectionProps> = ({
   return (
     <div>
       <select
+        style={{
+          border: "none",
+          outline: "none",
+          boxShadow: "none",
+        }}
         className="text-white bg-transparent"
         onChange={handleCharacterChange}
         defaultValue=""

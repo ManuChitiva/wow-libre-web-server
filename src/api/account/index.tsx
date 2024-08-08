@@ -34,7 +34,7 @@ export const getAccounts = async (jwt: string): Promise<AccountsModel[]> => {
 
 export const getAccount = async (
   jwt: string,
-  account_id: string
+  account_id: number
 ): Promise<AccountDetailDto> => {
   const response = await fetch(`${BASE_URL_AUTH}/api/account/${account_id}`, {
     method: "GET",
