@@ -37,14 +37,13 @@ const Announcement: React.FC<ConfirmationDialogProps> = ({
       try {
         await getAnnoucementProfession(characterId, skillId, accountId, token);
         onConfirm();
-      } catch (error) {
-        console.error("Error during announcement:", error);
+      } catch (error: any) {
         Swal.fire({
           icon: "error",
           color: "white",
           background: "#0B1218",
           title: "Error",
-          text: "No se pudo enviar el mensaje. Inténtelo de nuevo más tarde.",
+          text: `${error.message}`,
           confirmButtonText: "Aceptar",
         });
       }

@@ -1,7 +1,7 @@
 export interface GenericResponseDto<T> {
   code: number;
   message: string;
-  transactionId: string;
+  transaction_id: string;
   data: T;
 }
 
@@ -18,7 +18,7 @@ export class GenericResponseImpl<T> implements GenericResponseDto<T> {
   constructor(
     public code: number,
     public message: string,
-    public transactionId: string,
+    public transaction_id: string,
     public data: T
   ) {}
 }

@@ -200,7 +200,7 @@ const Professions: React.FC<ProfessionsProps> = ({
                       >
                         Editar
                       </button>
-                    )}{" "}
+                    )}
                     <button
                       onClick={() => handleAnnounce(profession)}
                       className="bg-violet-700 text-white px-4 py-2 rounded-lg hover:bg-violet-800 mt-3 focus:outline-none"

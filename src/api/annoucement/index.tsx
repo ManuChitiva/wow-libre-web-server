@@ -32,8 +32,10 @@ export const getAnnoucementProfession = async (
       const responseData: GenericResponseDto<void> = await response.json();
       return responseData;
     } else {
-      const errorMessage = await response.text();
-      throw new Error(`Error [${response.status}]: ${errorMessage}`);
+      const responseData: GenericResponseDto<void> = await response.json();
+      throw new Error(
+        `${responseData.message} - Id ${responseData.transaction_id}`
+      );
     }
   } catch (error: any) {
     console.error(`Error: ${error.message}`, error);

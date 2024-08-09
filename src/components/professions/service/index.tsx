@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import "./style.css"; // Asegúrate de tener este archivo CSS
+import "./style.css";
+import { professionsServices } from "@/api/professions";
+import Swal from "sweetalert2";
 
 interface GuildCharacterProps {
   isOpen: boolean;
@@ -16,15 +18,52 @@ const ProfesionService: React.FC<GuildCharacterProps> = ({
   isOpen,
   exist_services,
   is_public,
+  token,
+  character_id,
+  skill_id,
+  account_id,
   onClose,
 }) => {
   const [description, setDescription] = useState("");
   const [isPublic, setIsPublic] = useState(is_public);
+  const message = exist_services
+    ? "Su profesion ha sido actualizada"
+    : "Su profesion ha sido publicada";
+
+  const handleService = async () => {
+    try {
+      await professionsServices(
+        character_id,
+        skill_id,
+        account_id,
+        isPublic,
+        description,
+        token
+      );
+
+      Swal.fire({
+        icon: "success",
+        color: "white",
+        background: "#0B1218",
+        title: "Opss!!",
+        text: message,
+      });
+      onClose();
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        color: "white",
+        background: "#0B1218",
+        title: "Opss!!",
+        text: `${error.message}`,
+        confirmButtonText: "Aceptar",
+      });
+    }
+  };
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log({ description, isPublic });
-    onClose();
+    handleService();
   };
 
   return isOpen ? (
